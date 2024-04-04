@@ -24,7 +24,12 @@ class Admin::ProductsController < AdminController
   end
 
   def update 
-    if @product.update(product_params)
+    if @product.update(product_params.reject {|k| k["images"]})
+      if product_params['images']
+        product_params['images'].each do |image|
+          @product.images.attach(image)
+        end
+      end
       redirect_to admin_product_path(@product), notice: 'Product successfully updated'
     else 
       render :edit, status: :unprocessable_entity
