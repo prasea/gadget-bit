@@ -1,0 +1,46 @@
+<div class="text-success">
+  <%= notice %>
+</div>
+<section class="py-2">
+  <div class="container px-4 px-lg-5 my-5">
+    <div class="row gx-4 gx-lg-5 align-items-center">
+      <div class="col-md-6">
+        <div id="indicators-carousel" class="carousel slide" data-bs-ride="carousel">
+          <!-- Carousel items -->
+          <div class="carousel-inner" style="height: 500px;">
+            <% @product.images.each_with_index do |image, index| %>
+              <div class="<%= index.zero? ? "carousel-item active" : "carousel-item" %>">
+                <%= image_tag image, class: 'w-100 ' %>
+              </div>
+            <% end %>
+          </div>
+          <!-- Carousel controls -->
+          <button class="carousel-control-prev" type="button" data-bs-target="#indicators-carousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#indicators-carousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <h1 class="display-5 fw-bolder"><%= @product.name%></h1>
+        <div class="fs-5 mb-5">
+          <span class="text-decoration-line-through">4500</span>
+          <span><%= @product.price%></span>
+        </div>
+        <p class="lead"><%= @product.description%></p>
+        <div class="d-flex justify-content-between align-items-center"">
+          <button class="btn btn-outline-dark flex-shrink-0" type="button">
+            Buy Now
+          </button>
+          <button class="btn btn-outline-dark flex-shrink-0" type="button">
+            Add to cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
