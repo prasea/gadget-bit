@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   helper_method :admin_user?
-  
   def admin_user?
     current_user.is_a?(Admin) if current_user
   end
