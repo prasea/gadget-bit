@@ -18,6 +18,15 @@
     <%= form.text_area :description, rows: 4, class: "form-control" %>
   </div>
   <div class="mb-3">
+    <% if product.images.any? %>
+      <div class="row">
+        <% product.images.each do |image| %>
+          <div class="col-4 col-md-2">
+            <%= image_tag image, class: 'img-fluid rounded-md' %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
     <%= form.label :images, class: "form-label" %>
     <%= form.file_field :images, multiple: true, class: "form-control" %>
   </div>
