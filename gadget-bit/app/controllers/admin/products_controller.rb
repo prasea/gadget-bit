@@ -32,6 +32,13 @@ class Admin::ProductsController < AdminController
       render :edit, status: :unprocessable_entity
     end
   end
+
+  def destroy 
+    @product = Product.find(params[:id])
+    @product.destroy!
+    redirect_to admin_products_path, status: :see_other
+  end
+
   
   private 
   def product_params
