@@ -4,5 +4,5 @@ class Product < ApplicationRecord
     attachable.variant :medium, resize_to_limit: [250, 250]
    end
   belongs_to :category
-  has_one :stock
+  has_many :cart_items  
 end
