@@ -1,0 +1,27 @@
+<div class="container-md mx-auto">
+  <h1 class="fw-bold fs-4">New category</h1>
+  <%= form_with(model: [:admin, @category]) do |form| %>
+    <% if @category.errors.any? %>
+      <div class="alert alert-danger rounded-1 mt-3">
+        <h2><%= pluralize(@category.errors.count, "error") %> prohibited this category from being saved:</h2>
+        <ul>
+          <% @category.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="mb-3">
+      <%= form.label :name, class: "form-label" %>
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= form.label :description, class: "form-label" %>
+      <%= form.text_area :description, rows: 4, class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= form.submit "Save", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+  <%= link_to "Back to categories", admin_categories_path, class: "btn btn-secondary mt-2 fw-medium" %>
+</div>
