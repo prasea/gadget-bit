@@ -24,6 +24,16 @@
       Rs. <%= @product.price %>
     </p>
     <p class="my-3">
+      <strong class="block fw-medium mb-1">Images:</strong>
+      <% if @product.images.any? %>
+        <% @product.images.each do |image| %>
+          <%= image_tag(image.variant(resize_to_fill: [50, nil]))%>
+        <% end %>
+      <% else %>
+        <%= image_tag("https://via.placeholder.com/50") %>
+      <% end %>
+    </p>
+    <p class="my-3">
       <strong class="block fw-medium mb-1">Category:</strong>
       <%= @product.category.name %>
     </p>

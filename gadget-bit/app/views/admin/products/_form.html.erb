@@ -18,6 +18,10 @@
     <%= form.text_area :description, rows: 4, class: "form-control" %>
   </div>
   <div class="mb-3">
+    <%= form.label :images, class: "form-label" %>
+    <%= form.file_field :images, multiple: true, class: "form-control" %>
+  </div>
+  <div class="mb-3">
     <%= form.label :price, class: "form-label" %>
     <%= form.number_field :price, class: "form-control" %>
   </div>
