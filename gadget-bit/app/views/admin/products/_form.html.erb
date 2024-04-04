@@ -36,7 +36,8 @@
   </div>
   <div class="mb-3">
     <%= form.label :category_id, class: "form-label" %>
-    <%= form.number_field :category_id, class: "form-control" %>
+    <% default_category_id = Category.order(:name).first&.id %>
+    <%= form.collection_select :category_id, Category.order(:name), :id, :name, { prompt: false }, { id: 'category', class: "form-select", selected: default_category_id } %>
   </div>
   <div class="mb-3">
     <%= form.submit class: "btn btn-primary" %>

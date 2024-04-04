@@ -24,17 +24,18 @@ class Admin::ProductsController < AdminController
   end
 
   def update 
-    if @product.update(product_params.reject {|k| k["images"]})
+    if @product.update(product_params.reject { |k| k["images"] })
       if product_params['images']
         product_params['images'].each do |image|
           @product.images.attach(image)
         end
-      end
+      end  
       redirect_to admin_product_path(@product), notice: 'Product successfully updated'
     else 
       render :edit, status: :unprocessable_entity
     end
   end
+
 
   def destroy 
     @product.destroy!
@@ -44,7 +45,7 @@ class Admin::ProductsController < AdminController
   
   private 
   def product_params
-    params.require(:product).permit(:name, :description, :price, :category_id, images: [])
+    params.require(:product).permit(:name, :description, :price, :category_id, images: [], remove_image_ids: [])
   end
 
   def set_product
