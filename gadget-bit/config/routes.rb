@@ -12,7 +12,9 @@ Rails.application.routes.draw do
 
   namespace :admin do 
     resources :categories
-    resources :products
+    resources :products do 
+      resources :images, only: :destroy
+    end
   end
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

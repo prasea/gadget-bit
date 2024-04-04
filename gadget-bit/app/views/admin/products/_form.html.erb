@@ -23,6 +23,9 @@
         <% product.images.each do |image| %>
           <div class="col-4 col-md-2">
             <%= image_tag image, class: 'img-fluid rounded-md' %>
+            <%= link_to 'Remove', 
+              admin_product_image_path(product, image), 
+              data: {turbo_method: :delete,  confirm: 'Are you sure?' } %>
           </div>
         <% end %>
       </div>
