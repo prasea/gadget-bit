@@ -3,4 +3,5 @@ class Product < ApplicationRecord
     attachable.variant(:thumb, resize: "50x50")
    end
   belongs_to :category
+  has_one :stock
 end
