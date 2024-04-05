@@ -6,4 +6,10 @@ class Product < ApplicationRecord
   belongs_to :category
   has_many :cart_items  
   has_one :stock
+  before_create :build_default_stock
+
+  private
+  def build_default_stock
+    build_stock(quantity: 1)
+  end
 end
