@@ -37,9 +37,15 @@
     <%= form.label :price, class: "form-label" %>
     <%= form.number_field :price, class: "form-control" %>
   </div>
-  <div class="mb-3">
-    <%= link_to "Add Stock", new_admin_product_stock_path(product)%>
-  </div>
+  <% if @product.persisted? %>
+    <div class="mb-3">
+      <% if @product.stock.present? %>
+        <%= link_to "Update Stock", edit_admin_product_stock_path(@product, @product.stock) %>
+      <% else %>
+        <%= link_to "Add Stock", new_admin_product_stock_path(@product) %>
+      <% end %>
+    </div>
+  <% end %>
   <div class="mb-3">
     <%= form.label :category_id, class: "form-label" %>
     <% default_category_id = Category.order(:name).first&.id %>

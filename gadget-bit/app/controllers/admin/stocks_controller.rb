@@ -20,7 +20,22 @@ class Admin::StocksController < ApplicationController
     end
   end
 
+  def edit
+    @stock = @product.stock
+  end
+
+  def update
+    @stock = @product.stock
+
+    if @stock.update(stock_params)
+      redirect_to edit_admin_product_path(@product), notice: 'Stock updated successfully.'
+    else
+      render :edit
+    end
+  end
+
   private
+
   def stock_params
     params.require(:stock).permit(:quantity)
   end
