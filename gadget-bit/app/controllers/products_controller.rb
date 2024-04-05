@@ -1,6 +1,8 @@
 class ProductsController < ApplicationController
+  
   def index 
     @products = Product.all
+    @buy_now_method = current_user ? :post : :get
   end
 
   def show 
