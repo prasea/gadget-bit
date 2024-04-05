@@ -11,6 +11,9 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2024_04_05_053805) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -41,9 +44,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_05_053805) do
 
   create_table "cart_items", force: :cascade do |t|
     t.integer "quantity", default: 1
-    t.integer "cart_id", null: false
-    t.integer "order_id"
-    t.integer "product_id", null: false
+    t.bigint "cart_id", null: false
+    t.bigint "order_id"
+    t.bigint "product_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cart_id"], name: "index_cart_items_on_cart_id"
@@ -52,7 +55,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_05_053805) do
   end
 
   create_table "carts", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_carts_on_user_id", unique: true
@@ -68,7 +71,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_05_053805) do
   create_table "orders", force: :cascade do |t|
     t.boolean "fulfilled"
     t.decimal "total"
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_orders_on_user_id"
@@ -78,14 +81,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_05_053805) do
     t.string "name"
     t.text "description"
     t.decimal "price", precision: 8, scale: 2
-    t.integer "category_id", null: false
+    t.bigint "category_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_products_on_category_id"
   end
 
   create_table "stocks", force: :cascade do |t|
-    t.integer "product_id", null: false
+    t.bigint "product_id", null: false
     t.integer "quantity", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
