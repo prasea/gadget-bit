@@ -1,18 +1,26 @@
 class CartItemsController < ApplicationController
   def buy_now 
     find_or_create_cart_item
+    @cart_item.save
     redirect_to carts_path(@current_cart)
   end
 
   def add_to_cart
     find_or_create_cart_item
-    if @cart_item.quantity == 1 
-      @cart_item.quantity += (params[:quantity].to_i - 1)
+
+    requested_quantity = params[:quantity].to_i
+    remaining_stock = @selected_product.stock.quantity - @cart_item.quantity
+    if remaining_stock >= requested_quantity
+      if @cart_item.quantity == 1 
+        @cart_item.quantity += requested_quantity-1
+      else 
+        @cart_item.quantity += requested_quantity
+      end
+      @cart_item.save 
+      redirect_to product_path(@selected_product)
     else 
-      @cart_item.quantity += (params[:quantity].to_i)
+      redirect_to product_path(@selected_product), notice: 'Insufficient stock. Unable to add product to cart.'
     end
-    @cart_item.save 
-    redirect_to product_path(@selected_product), notice: 'Product successfully added to cart'
   end
 
   private 
@@ -24,7 +32,6 @@ class CartItemsController < ApplicationController
       @cart_item = CartItem.new 
       @cart_item.cart = @current_cart
       @cart_item.product = @selected_product
-      @cart_item.save 
     end
   end
 end
