@@ -24,10 +24,6 @@
       Rs. <%= @product.price %>
     </p>
     <p class="my-3">
-      <strong class="block fw-medium mb-1">Stock Quantity:</strong>
-      <%= @product.quantity %>
-    </p>
-    <p class="my-3">
       <strong class="block fw-medium mb-1">Images:</strong>
       <% if @product.images.any? %>
         <% @product.images.each do |image| %>

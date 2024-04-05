@@ -38,11 +38,7 @@
     <%= form.number_field :price, class: "form-control" %>
   </div>
   <div class="mb-3">
-    <%= form.label :quantity, class: 'form-label'%>
-    <%= form.number_field :quantity, class: 'form-control'%>
-  </div>
-  <div class="mb-3">
-    <%= link_to "Product Stock", admin_product_stocks_path(admin_product)%>
+    <%= link_to "Add Stock", new_admin_product_stock_path(product)%>
   </div>
   <div class="mb-3">
     <%= form.label :category_id, class: "form-label" %>
