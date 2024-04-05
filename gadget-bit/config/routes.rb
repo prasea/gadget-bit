@@ -19,8 +19,8 @@ Rails.application.routes.draw do
   resources :products
 
   get '/carts/:id', to: 'carts#show', as: 'carts'
-  post '/buy_now/:product_id', to: 'cart_items#buy_now', as: 'cart_item_buy_now'
-
+  post '/buy_now/:product_id', to: 'cart_items#buy_now', as: 'buy_now'
+	post '/add_to_cart/:product_id', to: 'cart_items#add_to_cart', as: 'add_to_cart'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
