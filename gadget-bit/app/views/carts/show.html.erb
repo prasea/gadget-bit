@@ -41,9 +41,9 @@
                     <button class="btn btn-white border-secondary bg-white btn-md mb-2">
                       <i class="fas fa-sync"></i>
                     </button>
-                    <button class="btn btn-white border-secondary bg-white btn-md mb-2">
+                    <%= button_to remove_from_cart_path(cart_item.product), method: :delete, class: 'btn btn-white border-secondary bg-white btn-md mb-2' do%>
                       <i class="fas fa-trash"></i>
-                    </button>
+                    <% end %>
                   </div>
                 </td>
               </tr>
