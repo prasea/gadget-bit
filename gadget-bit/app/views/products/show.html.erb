@@ -33,9 +33,7 @@
         </div>
         <p class="lead"><%= @product.description%></p>
         <div class="d-flex justify-content-between align-items-center"">
-          <button class="btn btn-outline-dark flex-shrink-0" type="button">
-            Buy Now
-          </button>
+          <%= button_to 'Buy Now', cart_item_buy_now_path(@product), class: 'btn btn-outline-dark flex-shrink-0'%>
           <button class="btn btn-outline-dark flex-shrink-0" type="button">
             Add to cart
           </button>
