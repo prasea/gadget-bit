@@ -33,7 +33,7 @@
         </div>
         <p class="lead"><%= @product.description%></p>
         <div class="d-flex justify-content-between align-items-center"">
-          <%= button_to 'Buy Now', cart_item_buy_now_path(@product), class: 'btn btn-outline-dark flex-shrink-0'%>
+          <%= link_to "Buy Now", @buy_now_path,  data: { turbo_method: @buy_now_method } , class: "btn btn-outline-dark flex-shrink-0" %>
           <button class="btn btn-outline-dark flex-shrink-0" type="button">
             Add to cart
           </button>
