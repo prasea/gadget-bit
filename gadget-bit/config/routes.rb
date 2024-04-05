@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     resources :categories
     resources :products do 
       resources :images, only: :destroy
+      resources :stocks
     end
   end
   resources :products

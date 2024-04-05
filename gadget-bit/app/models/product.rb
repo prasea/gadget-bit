@@ -5,4 +5,5 @@ class Product < ApplicationRecord
    end
   belongs_to :category
   has_many :cart_items  
+  has_one :stock
 end
