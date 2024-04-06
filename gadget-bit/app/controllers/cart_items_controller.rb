@@ -1,5 +1,6 @@
 class CartItemsController < ApplicationController
   before_action :authenticate_user!, only: :add_to_cart
+  
   def buy_now 
     find_or_create_cart_item
     @cart_item.save
@@ -30,6 +31,30 @@ class CartItemsController < ApplicationController
     @cart_item.destroy 
     redirect_to carts_path(@current_cart)	
   end
+
+  def add_quantity
+    @selected_product = Product.find(params[:product_id])
+    @cart_item = @current_cart.cart_items.find_by(product_id: @selected_product)
+    if @cart_item.product.stock.quantity > @cart_item.quantity
+      @cart_item.quantity += 1
+      @cart_item.save
+      redirect_to carts_path(@current_cart), notice: 'Quantity incremented successfully.'      
+    else
+      redirect_to carts_path(@current_cart), alert: 'Cannot increment quantity further. Product stock limit reached.'
+    end
+  end 
+
+  def sub_quantity 
+    @selected_product = Product.find(params[:product_id])
+    @cart_item = @current_cart.cart_items.find_by(product_id: @selected_product)
+    if @cart_item.quantity > 1
+      @cart_item.quantity -= 1
+      @cart_item.save
+      redirect_to carts_path(@current_cart), notice: 'Quantity decremented successfully.'
+    else
+      redirect_to carts_path(@current_cart), alert: 'Cannot decrement quantity further. Minimum quantity reached.'
+    end
+  end 
   
   private 
   def find_or_create_cart_item 
