@@ -1,3 +1,6 @@
+<%= turbo_frame_tag "flash_messages" do %>
+  <%= render "flash_messages"%>
+<% end %>
 <section class="pt-5 pb-5">
   <div class="container">
     <div class="row w-100">
@@ -31,9 +34,11 @@
                 <td data-th="Price" class="align-middle"><%= cart_item.product.price %></td>
                 <td data-th="Quantity" class="align-middle text-center">
                   <div class="d-flex justify-content-center justify-content-md-start">
-                    <%= button_to "-", cart_item_sub_quantity_path(cart_item.product), class: "btn btn-outline-secondary ms-2 mb-2 mb-md-0" %>
-                    <div class="btn btn-outline-secondary mb-2 mb-md-0"><%= cart_item.quantity %></div>
-                    <%= button_to "+", cart_item_add_quantity_path(cart_item.product), class: "btn btn-outline-secondary ms-2 mb-2 mb-md-0" %>
+                    <%= button_to "-", cart_item_sub_quantity_path(cart_item.product), class: "btn btn-outline-secondary ms-2" %>
+                    <%= turbo_frame_tag "quantity_#{cart_item.id}" do %>
+                      <%= render "quantity", cart_item: cart_item%>
+                    <% end %>
+                    <%= button_to "+", cart_item_add_quantity_path(cart_item.product), class: "btn btn-outline-secondary ms-2" %>
                   </div>
                 </td>
                 <td class="actions align-middle">
