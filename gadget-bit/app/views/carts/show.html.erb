@@ -67,9 +67,28 @@
     </div>
     <div class="row mt-4 d-flex align-items-center">
       <div class="col-sm-6 order-md-2 text-right">
-        <%= button_to order_path, class: 'btn btn-primary mb-4 btn-lg' do %>
-          Checkout 
-        <% end %>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#checkoutModal">
+          Checkout
+        </button>
+        <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="checkoutModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Are you sure you want to proceed to checkout?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <%= button_to order_path, method: :post, class: 'btn btn-primary' do %>
+                  Confirm Checkout
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="col-sm-6 mb-3">
         <%= link_to root_path do %>
