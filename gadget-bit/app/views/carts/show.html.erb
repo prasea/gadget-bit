@@ -58,13 +58,9 @@
         <div class="mt-4 d-flex justify-content-end">
           <div class="text-end">
             <h4>Subtotal:</h4>
-            <h2>
-              <% sum = 0%>
-              <% @current_cart.products.each do |product|%>
-                <% sum += product.price%>
-              <%end%>
-              <%= sum%>
-            </h2>
+            <%= turbo_frame_tag "cart_#{@current_cart.id}" do %>
+              <%= render "cart_total_price", cart: @current_cart %>
+            <% end %>
           </div>
         </div>
       </div>

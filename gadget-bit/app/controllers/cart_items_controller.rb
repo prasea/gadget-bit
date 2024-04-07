@@ -40,8 +40,9 @@ class CartItemsController < ApplicationController
       # redirect_to carts_path(@current_cart), notice: 'Quantity incremented successfully.'      
       respond_to do |format| 
         format.turbo_stream { render turbo_stream: [
+          turbo_stream.replace("flash_messages", partial: "carts/flash_messages", locals: { alert: 'Quantity incremented successfully.', alert_type: 'success' }), 
           turbo_stream.update("quantity_#{@cart_item.id}", partial: "carts/quantity", locals: {cart_item: @cart_item}),
-          turbo_stream.replace("flash_messages", partial: "carts/flash_messages", locals: { alert: 'Quantity incremented successfully.', alert_type: 'success' })
+          turbo_stream.update( "cart_#{@current_cart.id}", partial: "carts/cart_total_price", locals: { cart: @current_cart } )
         ]}
       end
     else
@@ -61,8 +62,9 @@ class CartItemsController < ApplicationController
       # redirect_to carts_path(@current_cart), notice: 'Quantity decremented successfully.'
       respond_to do |format| 
         format.turbo_stream { render turbo_stream: [
+          turbo_stream.replace("flash_messages", partial: "carts/flash_messages", locals: { alert: 'Quantity decremented successfully.', alert_type: 'success' }), 
           turbo_stream.update("quantity_#{@cart_item.id}", partial: "carts/quantity", locals: {cart_item: @cart_item}),
-          turbo_stream.replace("flash_messages", partial: "carts/flash_messages", locals: { alert: 'Quantity decremented successfully.', alert_type: 'success' })
+          turbo_stream.update( "cart_#{@current_cart.id}", partial: "carts/cart_total_price", locals: { cart: @current_cart } )
         ]}
       end
     else
