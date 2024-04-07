@@ -13,9 +13,13 @@ class OrdersController < ApplicationController
       @current_cart.destroy  
       session[:cart_id] = nil
       Cart.create(user: current_user)
-      redirect_to root_path, notice: 'Your order has been placed successfully.'
+      redirect_to success_path, notice: 'Your order has been placed successfully.'
     else
       redirect_to root_path, alert: 'Failed to place your order. Please try again.'
     end
   end 
+
+  def success 
+
+  end
 end
