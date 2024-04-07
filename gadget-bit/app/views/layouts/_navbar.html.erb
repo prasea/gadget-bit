@@ -9,7 +9,9 @@
         <% if current_user %>
           <li class="nav-item">
             <%= link_to carts_path(@current_cart), class: 'nav-link' do %>
-              <span>	<%= @current_cart.cart_items.size %> </span>
+              <%= turbo_frame_tag "cart_icon_#{@current_cart.id}" do %>
+                <%= render 'layouts/total_cart_items_in_cart', cart: @current_cart%>
+              <% end %>
               <i class="fas fa-shopping-cart fa-lg"></i>
             <% end %>
           </li>

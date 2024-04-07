@@ -32,7 +32,8 @@ class CartItemsController < ApplicationController
     respond_to do |format|
       format.turbo_stream { render turbo_stream: [
         turbo_stream.remove("cart_item_#{@cart_item.id}"), 
-        turbo_stream.update("cart_#{@current_cart.id}", partial: 'carts/cart_total_price', locals: { cart: @current_cart })
+        turbo_stream.update("cart_#{@current_cart.id}", partial: 'carts/cart_total_price', locals: { cart: @current_cart }), 
+        turbo_stream.update("cart_icon_#{@current_cart.id}",partial: "layouts/total_cart_items_in_cart", locals: { cart: @current_cart })
       ]}
     end
   end
