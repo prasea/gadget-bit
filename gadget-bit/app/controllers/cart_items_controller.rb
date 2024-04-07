@@ -32,18 +32,13 @@ class CartItemsController < ApplicationController
   end
 
   def add_quantity
-    @selected_product = Product.find(params[:product_id])
-    @cart_item = @current_cart.cart_items.find_by(product_id: @selected_product)
+    @cart_item = find_cart_item(params[:product_id])
     if @cart_item.product.stock.quantity > @cart_item.quantity
       @cart_item.quantity += 1
       @cart_item.save
       # redirect_to carts_path(@current_cart), notice: 'Quantity incremented successfully.'      
       respond_to do |format| 
-        format.turbo_stream { render turbo_stream: [
-          turbo_stream.replace("flash_messages", partial: "carts/flash_messages", locals: { alert: 'Quantity incremented successfully.', alert_type: 'success' }), 
-          turbo_stream.update("quantity_#{@cart_item.id}", partial: "carts/quantity", locals: {cart_item: @cart_item}),
-          turbo_stream.update( "cart_#{@current_cart.id}", partial: "carts/cart_total_price", locals: { cart: @current_cart } )
-        ]}
+        format.turbo_stream { render turbo_stream: render_streams('Quantity incremented successfully.')}
       end
     else
       # redirect_to carts_path(@current_cart), alert: 'Cannot increment quantity further. Product stock limit reached.'
@@ -54,18 +49,13 @@ class CartItemsController < ApplicationController
   end 
 
   def sub_quantity 
-    @selected_product = Product.find(params[:product_id])
-    @cart_item = @current_cart.cart_items.find_by(product_id: @selected_product)
+    @cart_item = find_cart_item(params[:product_id])
     if @cart_item.quantity > 1
       @cart_item.quantity -= 1
       @cart_item.save
       # redirect_to carts_path(@current_cart), notice: 'Quantity decremented successfully.'
       respond_to do |format| 
-        format.turbo_stream { render turbo_stream: [
-          turbo_stream.replace("flash_messages", partial: "carts/flash_messages", locals: { alert: 'Quantity decremented successfully.', alert_type: 'success' }), 
-          turbo_stream.update("quantity_#{@cart_item.id}", partial: "carts/quantity", locals: {cart_item: @cart_item}),
-          turbo_stream.update( "cart_#{@current_cart.id}", partial: "carts/cart_total_price", locals: { cart: @current_cart } )
-        ]}
+        format.turbo_stream { render turbo_stream: render_streams('Quantity decremented successfully.')}
       end
     else
       # redirect_to carts_path(@current_cart), alert: 'Cannot decrement quantity further. Minimum quantity reached.'
@@ -74,7 +64,7 @@ class CartItemsController < ApplicationController
       end
     end
   end 
-  
+
   private 
   def find_or_create_cart_item 
     @selected_product = Product.find(params[:product_id])
@@ -85,5 +75,18 @@ class CartItemsController < ApplicationController
       @cart_item.cart = @current_cart
       @cart_item.product = @selected_product
     end
+  end
+
+  def find_cart_item(product_id)
+    @selected_product = Product.find(params[:product_id])
+    @current_cart.cart_items.find_by(product_id: @selected_product)
+  end
+
+  def render_streams(message)
+    [
+      turbo_stream.replace('flash_messages', partial: 'carts/flash_messages', locals: { alert: message, alert_type: 'success' }),
+      turbo_stream.update("quantity_#{@cart_item.id}", partial: 'carts/quantity', locals: { cart_item: @cart_item }),
+      turbo_stream.update("cart_#{@current_cart.id}", partial: 'carts/cart_total_price', locals: { cart: @current_cart })
+    ]
   end
 end
