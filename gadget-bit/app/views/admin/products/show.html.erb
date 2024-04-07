@@ -1,0 +1,45 @@
+<div class="container-md mx-auto">
+  <div class="row mb-4">
+    <div class="col">
+      <h2>View Product</h2>
+    </div>
+    <div class="col">
+      <%= link_to "Back to products", admin_products_path, class: "btn btn-secondary fw-medium" %>
+    </div>
+  </div>
+  <div class="mx-auto">
+    <% if notice.present? %>
+      <p class="py-2 px-3 bg-success mb-5 text-white font-medium rounded-lg" id="notice"><%= notice %></p>
+    <% end %>
+    <p class="my-3">
+      <strong class="block fw-medium mb-1">Name:</strong>
+      <%= @product.name %>
+    </p>
+    <p class="my-3">
+      <strong class="block fw-medium mb-1">Description:</strong>
+      <%= @product.description %>
+    </p>
+    <p class="my-3">
+      <strong class="block fw-medium mb-1">Price:</strong>
+      Rs. <%= @product.price %>
+    </p>
+    <p class="my-3">
+      <strong class="block fw-medium mb-1">Images:</strong>
+      <% if @product.images.any? %>
+        <% @product.images.each do |image| %>
+          <%= image_tag(image.variant(resize_to_fill: [50, nil]))%>
+        <% end %>
+      <% else %>
+        <%= image_tag("https://via.placeholder.com/50") %>
+      <% end %>
+    </p>
+    <p class="my-3">
+      <strong class="block fw-medium mb-1">Category:</strong>
+      <%= @product.category.name %>
+    </p>
+    <div class="mt-2">
+      <%= link_to "Edit product", edit_admin_product_path(@product), class: "btn btn-secondary me-2 fw-medium" %>
+      <%= link_to "Destroy product", admin_product_path(@product), data: {turbo_method: :delete, confirm: "Are you sure?" }, class: "btn btn-danger fw-medium" %>
+    </div>
+  </div>
+</div>

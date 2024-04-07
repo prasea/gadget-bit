@@ -1,0 +1,36 @@
+<div class="row mb-4">
+  <div class="col">
+    <h2>All Products</h2>
+  </div>
+  <div class="col">
+    <%= link_to "New Product", new_admin_product_path, class: "btn btn-primary float-end"%>
+  </div>
+</div>
+<table class="table">
+  <thead class="table-dark">
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Price</th>
+      <th>Image</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= product.name %></td>
+        <td><%= product.description %></td>
+        <td><%= product.price %></td>
+        <td>
+          <% if product.images.any?%>
+            <%= image_tag(product.images.first.variant(resize_to_fill: [50, nil]))%>
+          <% else %>
+            <%= image_tag("https://via.placeholder.com/50") %>
+          <% end %>
+        </td>
+        <td><%= link_to 'Show', admin_product_path(product), class: 'btn btn-primary'%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
