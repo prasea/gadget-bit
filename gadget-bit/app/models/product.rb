@@ -4,7 +4,7 @@ class Product < ApplicationRecord
     attachable.variant :medium, resize_to_limit: [250, 250]
    end
   belongs_to :category
-  has_many :cart_items  
+  has_many :cart_items, dependent: :destroy 
   has_one :stock, dependent: :destroy
   before_create :build_default_stock
 

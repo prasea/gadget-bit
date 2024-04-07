@@ -67,7 +67,9 @@
     </div>
     <div class="row mt-4 d-flex align-items-center">
       <div class="col-sm-6 order-md-2 text-right">
-        <a href="#" class="btn btn-primary mb-4 btn-lg">Checkout</a>
+        <%= button_to order_path, class: 'btn btn-primary mb-4 btn-lg' do %>
+          Checkout 
+        <% end %>
       </div>
       <div class="col-sm-6 mb-3">
         <%= link_to root_path do %>
