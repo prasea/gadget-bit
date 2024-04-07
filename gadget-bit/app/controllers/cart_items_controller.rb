@@ -28,7 +28,13 @@ class CartItemsController < ApplicationController
     @selected_product = Product.find(params[:product_id])
     @cart_item = @current_cart.cart_items.find_by(product_id: @selected_product)
     @cart_item.destroy 
-    redirect_to carts_path(@current_cart)	
+    # redirect_to carts_path(@current_cart)	
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: [
+        turbo_stream.remove("cart_item_#{@cart_item.id}"), 
+        turbo_stream.update("cart_#{@current_cart.id}", partial: 'carts/cart_total_price', locals: { cart: @current_cart })
+      ]}
+    end
   end
 
   def add_quantity
