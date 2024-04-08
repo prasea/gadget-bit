@@ -21,5 +21,25 @@
         </div>
       </div>
     </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-2">Average Sale</h5>
+          <p class="card-text">
+            <%= @quick_stats[:avg_sale] ? (@quick_stats[:avg_sale]).to_s : "0" %>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title mb-2">Total Products Sold</h5>
+          <p class="card-text">
+            <%= @quick_stats[:total_products_sold] ? (@quick_stats[:total_products_sold]).to_s : "0" %>
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
