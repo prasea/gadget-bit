@@ -82,9 +82,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <%= button_to order_path, method: :post, class: 'btn btn-primary' do %>
-                  Confirm Checkout
-                <% end %>
+                <%= link_to 'Confirm Checkout', new_order_address_path, class: 'btn btn-primary'%>
               </div>
             </div>
           </div>

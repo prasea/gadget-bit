@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="py-5 text-center">
+    <h2>Checkout form</h2>
+    <p class="lead">Please fill in the below details to proceed with checkout</p>
+  </div>
+  <div class="row">
+    <div class="col-md-4 order-md-2 mb-4">
+      <h4 class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-muted">Your cart</span>
+        <span class="badge badge-secondary badge-pill">3</span>
+      </h4>
+      <ul class="list-group mb-3 sticky-top">
+        <% @current_cart.cart_items.each do |cart_item| %>
+          <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <div>
+              <h6 class="my-0"><%= cart_item.product.name %></h6>
+              <small class="text-muted"><%= cart_item.product.category.name %></small>
+            </div>
+            <span class="text-muted"><%= cart_item.product.price %></span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between">
+            <span>Total (NPR)</span>
+            <strong> <%= @current_cart.total_price%></strong>
+          </li>
+        <%end %>
+      </ul>
+    </div>
+    <div class="col-md-8 order-md-1">
+      <h4 class="mb-3">Billing address</h4>
+      <%= form_with(model: @order_address, url: new_order_path, method: :post) do |form| %>
+        <div class="mb-3">
+          <%= form.label :city, class: 'form-label' %>
+          <%= form.text_field :city, class: 'form-control' %>
+        </div>
+        <div class="mb-3">
+          <%= form.label :state, class: 'form-label' %>
+          <%= form.text_field :state, class: 'form-control' %>
+        </div>
+        <div class="mb-3">
+          <%= form.submit "Checkout", class: 'btn btn-primary btn-lg btn-block' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
