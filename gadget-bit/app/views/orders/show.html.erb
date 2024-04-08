@@ -12,7 +12,11 @@
             <div class="card h-100">
               <div class="card-body d-md-flex">
                 <div class="flex-shrink-0 me-md-3" style="width: 150px;">
-                  <%= image_tag cart_item.product.images[0], class:"square-img" %>
+                  <% if cart_item.product.images.present? %>
+                    <%= image_tag cart_item.product.images[0], class: "square-img" %>
+                  <% else %>
+                    <%= image_tag "https://placehold.co/150", class: "square-img" %>
+                  <% end %>
                 </div>
                 <div>
                   <h5 class="card-title"><%= cart_item.product.name %></h5>

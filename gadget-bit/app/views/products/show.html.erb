@@ -8,9 +8,15 @@
         <div id="indicators-carousel" class="carousel slide" data-bs-ride="carousel">
           <!-- Carousel items -->
           <div class="carousel-inner" style="height: 500px;">
-            <% @product.images.each_with_index do |image, index| %>
-              <div class="<%= index.zero? ? "carousel-item active" : "carousel-item" %>">
-                <%= image_tag image, class: 'w-100 ' %>
+            <% if @product.images.present? %>
+              <% @product.images.each_with_index do |image, index| %>
+                <div class="<%= index.zero? ? "carousel-item active" : "carousel-item" %>">
+                  <%= image_tag image, class: 'w-100' %>
+                </div>
+              <% end %>
+            <% else %>
+              <div class="carousel-item active">
+                <%= image_tag 'https://placehold.co/500', class: 'w-100' %>
               </div>
             <% end %>
           </div>

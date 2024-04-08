@@ -1,4 +1,5 @@
 class Admin::OrdersController < AdminController 
+  before_action :set_order, only: [:mark_fulfilled, :mark_unfulfilled]
   def index 
     # @orders = Order.all
     @not_fulfilled_orders = Order.where(fulfilled: false).order(created_at: :asc)
@@ -61,3 +62,5 @@ class Admin::OrdersController < AdminController
   end
   
 end
+
+
