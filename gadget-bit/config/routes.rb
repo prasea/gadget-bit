@@ -16,7 +16,9 @@ Rails.application.routes.draw do
       resources :images, only: :destroy
       resources :stocks
     end
-    resources :orders
+    resources :orders do
+      patch 'mark_fulfilled', on: :member, to: 'orders#mark_fulfilled'
+    end
   end
   resources :products
 
@@ -34,6 +36,9 @@ Rails.application.routes.draw do
   get 'orders/:order_id', to: 'orders#show', as: 'order_show'
 
   get 'order_address', to: 'orders#new_order_address', as: 'new_order_address'
+
+  # patch 'orders/:id/mark_fulfilled', to: 'orders#mark_fulfilled', as: 'mark_fulfilled_order'
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

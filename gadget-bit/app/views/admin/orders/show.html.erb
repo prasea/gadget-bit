@@ -15,9 +15,10 @@
       <thead class="table-dark">
         <tr>
           <th>Item</th>
-          <th>Quantity</th>
+          <th>OrderedQuantity</th>
           <th>Price</th>
           <th>Total</th>
+          <th>InStock</th>
         </tr>
       </thead>
       <tbody>
@@ -27,16 +28,20 @@
             <td><%= cart_item.quantity %></td>
             <td><%= cart_item.product.price %></td>
             <td><%= cart_item.total_of_single_item %></td>
+            <td><%= cart_item.product.stock.quantity%></td>
           </tr>
         <% end %>
       </tbody>
       <tfoot>
         <tr class="table-secondary">
-          <td colspan="3" class="text-end">Grand Total:</td>
+          <td colspan="4" class="text-end">Grand Total:</td>
           <td><%= @order.total %></td>
         </tr>
       </tfoot>
     </table>
+    <% if current_user && !@order.fulfilled %>
+      <%= link_to 'Mark as Fulfilled', mark_fulfilled_admin_order_path(@order), data: {turbo_method: :patch}, class: 'btn btn-success mb-3' %>
+    <% end %>
     <div class="card">
       <div class="card-header">
         Shipping Information
