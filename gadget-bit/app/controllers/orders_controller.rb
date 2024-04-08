@@ -10,7 +10,6 @@ class OrdersController < ApplicationController
     order.fulfilled = false
 
     if order.save
-      @current_cart.destroy  
       session[:cart_id] = nil
       Cart.create(user: current_user)
       redirect_to success_path, notice: 'Your order has been placed successfully.'
@@ -20,6 +19,13 @@ class OrdersController < ApplicationController
   end 
 
   def success 
-
   end
+
+  def index 
+    @orders = current_user.orders
+   end 
+
+  def show 
+    @order = Order.find(params[:order_id])
+  end 
 end

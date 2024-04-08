@@ -30,6 +30,8 @@ Rails.application.routes.draw do
 
   post "/orders", to: "orders#order", as: "order"
   get "/success", to: "orders#success", as: "success"
+  get "/orders", to: "orders#index", as: "orders"
+  get "/orders/:order_id", to: "orders#show", as: "order_show"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
