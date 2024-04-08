@@ -34,7 +34,7 @@
         </div>
         <div class="mb-3">
           <%= form.label :state, class: 'form-label' %>
-          <%= form.text_field :state, class: 'form-control' %>
+          <%= form.select :state, OrderAddress::NEPAL_STATES, class: 'form-control w-100'  %>
         </div>
         <div class="mb-3">
           <%= form.submit "Checkout", class: 'btn btn-primary btn-lg btn-block' %>
