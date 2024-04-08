@@ -11,6 +11,9 @@
     <% if notice.present? %>
       <p class="py-2 px-3 bg-success mb-5 text-white font-medium rounded-lg" id="notice"><%= notice %></p>
     <% end %>
+    <% if alert.present? %>
+      <p class="py-2 px-3 bg-danger mb-5 text-white font-medium rounded-lg" id="notice"><%= alert %></p>
+    <% end %>
     <table class="table">
       <thead class="table-dark">
         <tr>
@@ -28,19 +31,22 @@
             <td><%= cart_item.quantity %></td>
             <td><%= cart_item.product.price %></td>
             <td><%= cart_item.total_of_single_item %></td>
-            <td><%= cart_item.product.stock.quantity%></td>
+            <td><%= cart_item.product.stock.quantity %></td>
           </tr>
         <% end %>
       </tbody>
       <tfoot>
         <tr class="table-secondary">
-          <td colspan="4" class="text-end">Grand Total:</td>
+          <td class="text-end">Grand Total:</td>
           <td><%= @order.total %></td>
         </tr>
       </tfoot>
     </table>
     <% if current_user && !@order.fulfilled %>
       <%= link_to 'Mark as Fulfilled', mark_fulfilled_admin_order_path(@order), data: {turbo_method: :patch}, class: 'btn btn-success mb-3' %>
+    <% end %>
+    <% if current_user && @order.fulfilled %>
+      <%= link_to 'Mark as Unfulfilled', mark_unfulfilled_admin_order_path(@order), data: { turbo_method: :patch }, class: 'btn btn-warning mb-3' %>
     <% end %>
     <div class="card">
       <div class="card-header">

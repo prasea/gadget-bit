@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     end
     resources :orders do
       patch 'mark_fulfilled', on: :member, to: 'orders#mark_fulfilled'
+      patch 'mark_unfulfilled', on: :member, to: 'orders#mark_unfulfilled'
     end
   end
   resources :products
