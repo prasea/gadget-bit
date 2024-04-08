@@ -16,6 +16,10 @@ Rails.application.routes.draw do
       resources :images, only: :destroy
       resources :stocks
     end
+    resources :orders do
+      patch 'mark_fulfilled', on: :member, to: 'orders#mark_fulfilled'
+      patch 'mark_unfulfilled', on: :member, to: 'orders#mark_unfulfilled'
+    end
   end
   resources :products
 
@@ -26,6 +30,17 @@ Rails.application.routes.draw do
 
   post 'add_quantity/:product_id', to: 'cart_items#add_quantity', as: 'cart_item_add_quantity'
   post 'sub_quantity/:product_id', to: 'cart_items#sub_quantity', as: 'cart_item_sub_quantity'
+
+  post 'orders', to: 'orders#order', as: 'new_order'
+  get 'success', to: 'orders#success', as: 'success'
+  get 'orders', to: 'orders#index', as: 'orders'
+  get 'orders/:order_id', to: 'orders#show', as: 'order_show'
+
+  get 'order_address', to: 'orders#new_order_address', as: 'new_order_address'
+
+  # patch 'orders/:id/mark_fulfilled', to: 'orders#mark_fulfilled', as: 'mark_fulfilled_order'
+
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

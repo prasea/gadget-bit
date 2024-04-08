@@ -23,7 +23,11 @@
                 <td data-th="Product">
                   <div class="row align-items-center">
                     <div class="col-md-3 text-center text-md-left">
-                      <%= image_tag cart_item.product.images[0].variant(:medium), class:"img-fluid d-none d-md-block rounded mb-2 shadow "%>
+                      <% if cart_item.product.images.present? %>
+                        <%= image_tag cart_item.product.images[0].variant(:medium), class:"img-fluid d-none d-md-block rounded mb-2 shadow" %>
+                      <% else %>
+                        <%= image_tag 'https://placehold.co/250', class: 'img-fluid d-none d-md-block rounded mb-2 shadow' %>
+                      <% end %>
                     </div>
                     <div class="col-md-9 text-center text-md-left mt-sm-2">
                       <h4 class="align-middle"><%= cart_item.product.name %></h4>
@@ -67,7 +71,26 @@
     </div>
     <div class="row mt-4 d-flex align-items-center">
       <div class="col-sm-6 order-md-2 text-right">
-        <a href="#" class="btn btn-primary mb-4 btn-lg">Checkout</a>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#checkoutModal">
+          Checkout
+        </button>
+        <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="checkoutModalLabel">Checkout Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Are you sure you want to proceed to checkout?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <%= link_to 'Confirm Checkout', new_order_address_path, class: 'btn btn-primary'%>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="col-sm-6 mb-3">
         <%= link_to root_path do %>

@@ -5,11 +5,11 @@
     <div class="col mb-5">
       <div class="card h-100">
         <%= link_to product_path(product) do %>
-          <div class="position-relative">
-            <% if product.images.present? %>
-              <%= image_tag product.images[0], class: "card-img-top img-fluid" %>
-            <% end %>
-          </div>
+          <% if product.images.present? %>
+            <%= image_tag product.images[0], class: "card-img-top img-fluid" %>
+          <% else %>
+            <%= image_tag 'https://placehold.co/500', class: 'card-img-top img-fluid' %>
+          <% end %>
         <% end %>
         <div class="card-body d-flex flex-column">
           <h3 class="card-title"><%= product.name %></h3>
