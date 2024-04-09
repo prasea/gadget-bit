@@ -14,6 +14,7 @@ class OrdersController < ApplicationController
   
       if @order_address.save
         OrderMailer.with(user: current_user, order: @order).order_confirmation_email.deliver_now
+        OrderMailer.with(order: @order).new_order_email.deliver_now
         # OrderMailer.order_confirmation_email(current_user, @order).deliver_now
         Cart.create(user: current_user)
         session[:cart_id] = nil
