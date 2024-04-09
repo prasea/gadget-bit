@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     end
   end
   resources :products
+  resources :categories
 
   get 'carts/:id', to: 'carts#show', as: 'carts'
   post 'buy_now/:product_id', to: 'cart_items#buy_now', as: 'buy_now'
