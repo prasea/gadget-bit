@@ -10,4 +10,8 @@ class ProductsController < ApplicationController
     @buy_now_path = current_user ? buy_now_path(@product) : new_user_session_path
     @buy_now_method = current_user ? :post : :get
   end
+
+  def search 
+    @products = Product.where("name ILIKE ?", "%" + params[:q] + "%")
+  end 
 end 
