@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   
   def index 
-    @products = Product.all
+    @pagy, @products = pagy(Product.includes(:category).order(created_at: :desc))
     @buy_now_method = current_user ? :post : :get
 
     if params[:max_price].present?
@@ -21,9 +21,13 @@ class ProductsController < ApplicationController
   def search
     if params[:q].present?
       @products = Product.where("name ILIKE ?", "%" + params[:q] + "%")
+      if @products.empty?
+        flash.now[:notice] = "No products found for '#{params[:q]}'."
+      end
     else
       flash[:notice] = "Please enter a search query."
       redirect_to products_path
     end
   end
+  
 end 

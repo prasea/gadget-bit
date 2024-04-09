@@ -46,6 +46,7 @@
         </div>
       <% end %>
     </div>
+    <%== pagy_bootstrap_nav(@pagy) if @pagy.pages > 1%>
   </div>
 </div>
 <p class="text-success"><%= notice %></p>
