@@ -1,0 +1,57 @@
+ <%= form_with(model: [:admin, product]) do |form| %>
+  <% if product.errors.any? %>
+    <div class="alert alert-danger rounded-1 mt-3">
+      <h2><%= pluralize(product.errors.count, "error") %> prohibited this category from being saved:</h2>
+      <ul>
+        <% product.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :description, class: "form-label" %>
+    <%= form.text_area :description, rows: 4, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <% if product.images.any? %>
+      <div class="row">
+        <% product.images.each do |image| %>
+          <div class="col-4 col-md-2">
+            <%= image_tag image, class: 'img-fluid rounded-md' %>
+            <%= link_to 'Remove', 
+              admin_product_image_path(product, image), 
+              data: {turbo_method: :delete,  confirm: 'Are you sure?' } %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+    <%= form.label :images, class: "form-label" %>
+    <%= form.file_field :images, multiple: true, class: "form-control" %>
+  </div>
+  <div class="mb-3">
+    <%= form.label :price, class: "form-label" %>
+    <%= form.number_field :price, class: "form-control" %>
+  </div>
+  <% if @product.persisted? %>
+    <div class="mb-3">
+      <% if @product.stock.present? %>
+        <%= link_to "Update Stock", edit_admin_product_stock_path(@product, @product.stock) %>
+      <% else %>
+        <%= link_to "Add Stock", new_admin_product_stock_path(@product) %>
+      <% end %>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <%= form.label :category_id, class: "form-label" %>
+    <% default_category_id = Category.order(:name).first&.id %>
+    <%= form.collection_select :category_id, Category.order(:name), :id, :name, { prompt: false }, { id: 'category', class: "form-select", selected: default_category_id } %>
+  </div>
+  <div class="mb-3">
+    <%= form.submit class: "btn btn-primary" %>
+  </div>
+<% end %>

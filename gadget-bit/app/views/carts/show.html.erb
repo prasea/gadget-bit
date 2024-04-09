@@ -1,0 +1,102 @@
+<%= turbo_frame_tag "flash_messages" do %>
+  <%= render "flash_messages"%>
+<% end %>
+<section class="pt-5 pb-5">
+  <div class="container">
+    <div class="row w-100">
+      <div class="col-lg-12 col-md-12 col-12">
+        <h3 class="display-5 mb-2 text-center">Shopping Cart</h3>
+        <p class="mb-5 text-center">
+          <span class="fw-bold"><%= @current_cart.cart_items.size %></span> items in your cart</p>
+        <table id="shoppingCart" class="table table-condensed table-responsive">
+          <thead>
+            <tr>
+              <th style="width:60%">Product</th>
+              <th style="width:12%">Price</th>
+              <th style="width:10%">Quantity</th>
+              <th style="width:16%">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @current_cart.cart_items.each do |cart_item| %>
+              <tr id="cart_item_<%= cart_item.id%>">
+                <td data-th="Product">
+                  <div class="row align-items-center">
+                    <div class="col-md-3 text-center text-md-left">
+                      <% if cart_item.product.images.present? %>
+                        <%= image_tag cart_item.product.images[0].variant(:medium), class:"img-fluid d-none d-md-block rounded mb-2 shadow" %>
+                      <% else %>
+                        <%= image_tag 'https://placehold.co/250', class: 'img-fluid d-none d-md-block rounded mb-2 shadow' %>
+                      <% end %>
+                    </div>
+                    <div class="col-md-9 text-center text-md-left mt-sm-2">
+                      <h4 class="align-middle"><%= cart_item.product.name %></h4>
+                      <p class="font-weight-light align-middle"><%= cart_item.product.category.name %></p>
+                    </div>
+                  </div>
+                </td>
+                <td data-th="Price" class="align-middle"><%= cart_item.product.price %></td>
+                <td data-th="Quantity" class="align-middle text-center">
+                  <div class="d-flex justify-content-center justify-content-md-start">
+                    <%= button_to "-", cart_item_sub_quantity_path(cart_item.product), class: "btn btn-outline-secondary ms-2" %>
+                    <%= turbo_frame_tag "quantity_#{cart_item.id}" do %>
+                      <%= render "quantity", cart_item: cart_item%>
+                    <% end %>
+                    <%= button_to "+", cart_item_add_quantity_path(cart_item.product), class: "btn btn-outline-secondary ms-2" %>
+                  </div>
+                </td>
+                <td class="actions align-middle">
+                  <div class="text-right">
+                    <button class="btn btn-white border-secondary bg-white btn-md mb-2">
+                      <i class="fas fa-sync"></i>
+                    </button>
+                    <%= button_to remove_from_cart_path(cart_item.product), method: :delete, class: 'btn btn-white border-secondary bg-white btn-md mb-2' do%>
+                      <i class="fas fa-trash"></i>
+                    <% end %>
+                  </div>
+                </td>
+              </tr>
+            <% end%>
+          </tbody>
+        </table>
+        <div class="mt-4 d-flex justify-content-end">
+          <div class="text-end">
+            <h4>Subtotal:</h4>
+            <%= turbo_frame_tag "cart_#{@current_cart.id}" do %>
+              <%= render "cart_total_price", cart: @current_cart %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4 d-flex align-items-center">
+      <div class="col-sm-6 order-md-2 text-right">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#checkoutModal">
+          Checkout
+        </button>
+        <div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="checkoutModalLabel">Checkout Confirmation</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Are you sure you want to proceed to checkout?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <%= link_to 'Confirm Checkout', new_order_address_path, class: 'btn btn-primary'%>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 mb-3">
+        <%= link_to root_path do %>
+          <i class="fas fa-arrow-left mr-2"></i> Continue Shopping
+        <% end%>
+      </div>
+    </div>
+  </div>
+</section>

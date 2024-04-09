@@ -1,0 +1,48 @@
+<h3>Not Fulfilled Orders</h3>
+<table class="table">
+  <thead class="table-dark">
+    <tr>
+      <th>Order ID</th>
+      <th>Ordered By</th>
+      <th>Ordered Date</th>
+      <th>Ordered Amount</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @not_fulfilled_orders.each do |order| %>
+      <tr>
+        <td><%= order.id %></td>
+        <td><%= order.user.email %></td>
+        <td><%= order.created_at.to_date %></td>
+        <td><%= order.total %></td>
+        <td><%= link_to 'Show', admin_order_path(order), class: 'btn btn-primary'%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%== pagy_bootstrap_nav(@not_fulfilled_pagy) if @not_fulfilled_pagy.pages > 1%>
+<h3>Fulfilled Orders</h3>
+<table class="table">
+  <thead class="table-dark">
+    <tr>
+      <th>Order ID</th>
+      <th>Ordered By</th>
+      <th>Ordered Date</th>
+      <th>Ordered Amount</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @fulfilled_orders.each do |order| %>
+      <tr>
+        <td><%= order.id %></td>
+        <td><%= order.user.email %></td>
+        <td><%= order.created_at.to_date %></td>
+        <td><%= order.total %></td>
+        <td><%= link_to 'Show', admin_order_path(order), class: 'btn btn-primary'%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%== pagy_bootstrap_nav(@fulfilled_pagy) if @fulfilled_pagy.pages > 1%>

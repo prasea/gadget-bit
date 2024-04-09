@@ -1,0 +1,8 @@
+<div class="container-md mx-auto">
+  <h1 class="fw-bold fs-4">Editing Product</h1>
+  <%= render 'form', product: @product%>
+  <div class="mt-3">
+    <%= link_to "View product", admin_product_path(@product), class: "btn btn-secondary me-2 fw-medium" %>
+    <%= link_to "Back to product", admin_products_path, class: "btn btn-secondary fw-medium" %>
+  </div>
+</div>

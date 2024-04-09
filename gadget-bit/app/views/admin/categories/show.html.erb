@@ -1,0 +1,27 @@
+<div class="container-md mx-auto">
+  <div class="row mb-4">
+    <div class="col">
+      <h2>View Category</h2>
+    </div>
+    <div class="col">
+      <%= link_to "Back to categories", admin_categories_path, class: "btn btn-secondary fw-medium" %>
+    </div>
+  </div>
+  <div class="mx-auto">
+    <% if notice.present? %>
+      <p class="py-2 px-3 bg-success mb-5 text-white font-medium rounded-lg" id="notice"><%= notice %></p>
+    <% end %>
+    <p class="my-5">
+      <strong class="block fw-medium mb-1">Name:</strong>
+      <%= @category.name %>
+    </p>
+    <p class="my-5">
+      <strong class="block fw-medium mb-1">Description:</strong>
+      <%= @category.description %>
+    </p>
+    <div class="mt-2">
+      <%= link_to "Edit category", edit_admin_category_path(@category), class: "btn btn-secondary me-2 fw-medium" %>
+      <%= link_to "Destroy category", admin_category_path(@category), data: {turbo_method: :delete, confirm: "Are you sure?" }, class: "btn btn-danger fw-medium" %>
+    </div>
+  </div>
+</div>

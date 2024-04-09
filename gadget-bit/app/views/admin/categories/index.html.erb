@@ -1,0 +1,26 @@
+<div class="row mb-4">
+  <div class="col">
+    <h2>All Categories</h2>
+  </div>
+  <div class="col">
+    <%= link_to "New Category", new_admin_category_path, class: "btn btn-primary float-end"%>
+  </div>
+</div>
+<table class="table">
+  <thead class="table-dark">
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @categories.each do |category| %>
+      <tr>
+        <td><%= category.name %></td>
+        <td><%= category.description %></td>
+        <td><%= link_to 'Show', admin_category_path(category), class: 'btn btn-primary'%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

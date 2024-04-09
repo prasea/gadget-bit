@@ -1,0 +1,18 @@
+<div class="container mt-5">
+  <h1 class="text-center mb-5">My Orders</h1>
+  <div class="row">
+    <% if @orders.present? %>
+      <% @orders.each do |order| %>
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <div class="card-body">
+              <p class="card-text">Ordered Date: <%= order.created_at.to_date %></p>
+              <p class="card-text">Total Products: <%= order.cart_items.size %></p>
+              <%= link_to "View Details", order_show_path(order), class: "btn btn-primary" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
