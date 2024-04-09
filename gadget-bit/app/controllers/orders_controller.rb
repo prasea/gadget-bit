@@ -13,10 +13,12 @@ class OrdersController < ApplicationController
       @order_address.order_id = @order.id
   
       if @order_address.save
+        # OrderMailer.with(user: current_user, order: @order).order_confirmation_email.deliver_now        
         if Rails.env.production?
-          OrderMailer.with(user: current_user, order: @order).order_confirmation_email.deliver_now
-          OrderMailer.with(order: @order).new_order_email.deliver_now
+          SendOrderConfirmationEmailJob.perform_later(current_user.id, @order.id)
+          SendNewOrderEmailJob.perform_later(@order.id)
         end
+
         Cart.create(user: current_user)
         session[:cart_id] = nil
         redirect_to success_path, notice: 'Your order has been placed successfully.'
