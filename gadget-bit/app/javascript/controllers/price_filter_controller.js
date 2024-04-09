@@ -7,12 +7,11 @@ export default class extends Controller {
 
     const minPrice = minPriceInput.value.trim();
     const maxPrice = maxPriceInput.value.trim();
-
-    if (minPrice === '' || maxPrice === '' || isNaN(minPrice) || isNaN(maxPrice) || parseFloat(minPrice) < 0 || parseFloat(maxPrice) < 0) {
+    if ((minPrice === '' && maxPrice === '') || parseFloat(minPrice) < 0 || parseFloat(maxPrice) < 0) {
       const alertDiv = document.createElement('div');
       alertDiv.classList.add('alert', 'alert-danger');
-      alertDiv.textContent = 'Please enter valid prices.';
-      
+      alertDiv.textContent = 'Please enter valid price.';
+
       const form = document.querySelector('form[data-controller="price-filter"]');
       const parentElement = form.parentElement;
       parentElement.insertBefore(alertDiv, form);

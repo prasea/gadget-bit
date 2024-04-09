@@ -11,9 +11,9 @@
           </li>
         <% end %>
       </ul>
-      <form class="d-flex" action="<%= search_products_path %>" method="get">
-        <input type="search" name="q" class="form-control me-2" placeholder="Search" aria-label="Search" value="<%= params[:q] %>">
-        <button type="submit" class="btn btn-outline-success">Search</button>
+      <form class="d-flex" action="<%= search_products_path %>" method="get" data-controller="product-search">
+        <input type="search" name="q" class="form-control me-2" placeholder="Search" aria-label="Search" value="<%= params[:q] %>" id="search">
+        <button type="submit" class="btn btn-outline-success" data-action="product-search#validate">Search</button>
       </form>
       <% if params[:q].present? %>
         <%= link_to "Clear Search", products_path, class: "btn btn-outline-secondary ms-2" %>

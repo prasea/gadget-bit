@@ -9,3 +9,6 @@ application.register("hello", HelloController)
 
 import PriceFilterController from "./price_filter_controller"
 application.register("price-filter", PriceFilterController)
+
+import ProductSearchController from "./product_search_controller"
+application.register("product-search", ProductSearchController)
