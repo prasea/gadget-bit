@@ -8,5 +8,6 @@ class CategoriesController < ApplicationController
     if params[:min_price].present?
       @products = @products.where("price >= ?", params[:min_price])     
     end
+    @buy_now_method = current_user ? :post : :get
   end
 end

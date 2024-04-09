@@ -13,6 +13,8 @@ class OrdersController < ApplicationController
       @order_address.order_id = @order.id
   
       if @order_address.save
+        OrderMailer.with(user: current_user, order: @order).order_confirmation_email.deliver_now
+        # OrderMailer.order_confirmation_email(current_user, @order).deliver_now
         Cart.create(user: current_user)
         session[:cart_id] = nil
         redirect_to success_path, notice: 'Your order has been placed successfully.'
