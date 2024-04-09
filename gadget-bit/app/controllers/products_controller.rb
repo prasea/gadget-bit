@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   
   def index 
-    @pagy, @products = pagy(Product.includes(:category).all)
+    @pagy, @products = pagy(Product.includes(:category).order(created_at: :desc))
     @buy_now_method = current_user ? :post : :get
 
     if params[:max_price].present?
