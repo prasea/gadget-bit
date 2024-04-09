@@ -1,0 +1,23 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse collapse-sm" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <% categories_for_nav.each do |category| %>
+          <li class="nav-item fw-bold fs-5">
+            <%= link_to category.name, category_path(category.id), class: "nav-link" %>
+          </li>
+        <% end %>
+      </ul>
+      <form class="d-flex" action="<%= search_products_path %>" method="get" data-controller="product-search">
+        <input type="search" name="q" class="form-control me-2" placeholder="Search" aria-label="Search" value="<%= params[:q] %>" id="search">
+        <button type="submit" class="btn btn-outline-success" data-action="product-search#validate">Search</button>
+      </form>
+      <% if params[:q].present? %>
+        <%= link_to "Clear Search", products_path, class: "btn btn-outline-secondary ms-2" %>
+      <% end %>
+    </div>
+  </div>
+</nav>

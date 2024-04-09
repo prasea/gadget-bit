@@ -21,7 +21,11 @@ Rails.application.routes.draw do
       patch 'mark_unfulfilled', on: :member, to: 'orders#mark_unfulfilled'
     end
   end
-  resources :products
+  resources :products, only: [:index, :show] do
+    get :search, on: :collection
+  end
+  
+  resources :categories
 
   get 'carts/:id', to: 'carts#show', as: 'carts'
   post 'buy_now/:product_id', to: 'cart_items#buy_now', as: 'buy_now'
@@ -37,6 +41,8 @@ Rails.application.routes.draw do
   get 'orders/:order_id', to: 'orders#show', as: 'order_show'
 
   get 'order_address', to: 'orders#new_order_address', as: 'new_order_address'
+
+  # get 'search', to: 'products#search', as: 'search'
 
   # patch 'orders/:id/mark_fulfilled', to: 'orders#mark_fulfilled', as: 'mark_fulfilled_order'
 

@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :set_current_cart
-  helper_method :admin_user?
-
+  helper_method :admin_user?, :categories_for_nav
+  include Pagy::Backend
   def set_current_cart
     if current_user && current_user.cart.nil? 
       cart = Cart.create 
@@ -17,6 +17,10 @@ class ApplicationController < ActionController::Base
 
   def admin_user?
     current_user.is_a?(Admin) if current_user
+  end
+
+  def categories_for_nav
+    @categories_for_nav ||= Category.all
   end
 
   protected

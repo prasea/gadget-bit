@@ -1,7 +1,7 @@
 class Admin::ProductsController < AdminController
   before_action :set_product, only: %i[show edit update destroy]
   def index
-    @products = Product.all
+    @pagy, @products = pagy(Product.includes(:category).order(created_at: :desc))
   end
 
   def new
