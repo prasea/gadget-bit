@@ -2,7 +2,7 @@
   <div class="col-lg-3 mb-4">
     <div>
       <h3>Price Filter</h3>
-      <%= form_with url: category_path(@category), method: :get do |f|%>
+      <%= form_with url: category_path(@category), method: :get, data: {controller: "price-filter"} do |f|%>
         <div class="mb-3">
           <%= f.label :min_price, "Minimum Price" %>
           <%= f.number_field :min_price, class: "form-control", placeholder: "Enter minimum price" %>
@@ -12,7 +12,7 @@
           <%= f.number_field :max_price, class: "form-control", placeholder: "Enter maximum price" %>
         </div>
         <div class="d-flex">
-          <%= f.submit "Filter", class: "btn btn-primary me-2" %>
+          <%= f.submit "Filter", class: "btn btn-primary me-2", data: { action: "price-filter#validate" } %>
           <% if params[:min_price].present? || params[:max_price].present? %>
             <%= link_to "Clear Price Filter", category_path(@category), class: "btn btn-outline-secondary" %>
           <% end %>
