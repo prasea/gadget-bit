@@ -1,4 +1,4 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
   
@@ -9,16 +9,49 @@ export default class extends Controller {
     const password = document.getElementById('user_password').value.trim();
     const passwordConfirmation = document.getElementById('user_password_confirmation').value.trim();
     
-    if (email === '' || name === '' || contact === '' || password === '' || passwordConfirmation === ''){
-      this.displayAlert("Fields can't be empty")
+    const errorMessages = [];
+
+    if (email === '') {
+      errorMessages.push("Email can't be blank");
     }
-    event.preventDefault();
+
+    if (name === '') {
+      errorMessages.push("Name can't be blank");
+    }
+
+    if (contact === '') {
+      errorMessages.push("Contact can't be blank");
+    }
+
+    if (password === '') {
+      errorMessages.push("Password can't be blank");
+    } else if (password.length < 6) {
+      errorMessages.push("Password must be at least 6 characters long");
+    }
+
+    if (passwordConfirmation === '') {
+      errorMessages.push("Password Confirmation can't be blank");
+    } else if (passwordConfirmation.length < 6) {
+      errorMessages.push("Confirmation password must be at least 6 characters long");
+    }
+
+    if (errorMessages.length > 0) {
+      this.displayAlert(errorMessages);
+      event.preventDefault();
+    }
   }
 
-  displayAlert(message) {
+  displayAlert(messages) {
     const alertDiv = document.createElement('div');
     alertDiv.classList.add('alert', 'alert-danger');
-    alertDiv.textContent = message;
+
+    const ul = document.createElement('ul');
+    messages.forEach(message => {
+      const li = document.createElement('li');
+      li.textContent = message;
+      ul.appendChild(li);
+    });
+    alertDiv.appendChild(ul);
 
     const form = document.querySelector('form[data-controller="signup-validation"]');
     const parentElement = form.parentElement;
@@ -26,7 +59,6 @@ export default class extends Controller {
 
     setTimeout(() => {
       alertDiv.remove();
-    }, 3000);
+    }, 5000);
   }
 }
-
