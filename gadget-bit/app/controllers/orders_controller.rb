@@ -7,8 +7,7 @@ class OrdersController < ApplicationController
   
     if @order.save
       @current_cart.cart_items.each do |cart_item|
-        # @order.cart_items << cart_item
-        # OrderProduct.create(order: @order.id, product: cart_item.product_id, quantity: cart_item.quantity)
+        @order.cart_items << cart_item
         @order.order_products.create(product_id: cart_item.product_id, quantity: cart_item.quantity)
       end
       @order_address.order_id = @order.id

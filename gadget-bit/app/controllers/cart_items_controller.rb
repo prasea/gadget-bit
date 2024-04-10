@@ -10,31 +10,36 @@ class CartItemsController < ApplicationController
   def add_to_cart
     find_or_create_cart_item
     requested_quantity = params[:quantity].to_i
-    remaining_stock = @selected_product.stock.quantity - @cart_item.quantity
-    if remaining_stock >= requested_quantity
-      if @cart_item.quantity == 1 
-        @cart_item.quantity += requested_quantity-1
-      else 
-        @cart_item.quantity += requested_quantity
-      end
-      @cart_item.save 
-      redirect_to product_path(@selected_product)
+    #Even when prouct not in cart, the default quantity is 1
+    if @cart_item.quantity == 1       
+      remaining_stock = @selected_product.stock.quantity
     else 
-      redirect_to product_path(@selected_product), notice: 'Insufficient stock. Unable to add product to cart.'
+      remaining_stock = @selected_product.stock.quantity - @cart_item.quantity
+    end 
+  
+    if remaining_stock >= requested_quantity
+      @cart_item.quantity += requested_quantity
+      @cart_item.save 
+      redirect_to product_path(@selected_product), notice: 'Product added to cart successfully.'
+    else 
+      redirect_to product_path(@selected_product), alert: 'Insufficient stock. Unable to add product to cart.'
     end
   end
-
+  
   def remove_from_cart 
     @selected_product = Product.find(params[:product_id])
     @cart_item = @current_cart.cart_items.find_by(product_id: @selected_product)
     @cart_item.destroy 
-    # redirect_to carts_path(@current_cart)	
-    respond_to do |format|
-      format.turbo_stream { render turbo_stream: [
-        turbo_stream.remove("cart_item_#{@cart_item.id}"), 
-        turbo_stream.update("cart_#{@current_cart.id}", partial: 'carts/cart_total_price', locals: { cart: @current_cart }), 
-        turbo_stream.update("cart_icon_#{@current_cart.id}",partial: "layouts/total_cart_items_in_cart", locals: { cart: @current_cart })
-      ]}
+    if @current_cart.cart_items.empty? 
+      redirect_to carts_path(@current_cart)
+    else 
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: [
+          turbo_stream.remove("cart_item_#{@cart_item.id}"), 
+          turbo_stream.update("cart_#{@current_cart.id}", partial: 'carts/cart_total_price', locals: { cart: @current_cart }), 
+          turbo_stream.update("cart_icon_#{@current_cart.id}",partial: "layouts/total_cart_items_in_cart", locals: { cart: @current_cart })
+        ]}
+      end
     end
   end
 
