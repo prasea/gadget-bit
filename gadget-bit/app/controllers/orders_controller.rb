@@ -45,6 +45,12 @@ class OrdersController < ApplicationController
   def show 
     @order = Order.find(params[:order_id])
   end 
+
+  def destroy 
+    @order = Order.find(params[:order_id])
+    @order.destroy 
+    redirect_to orders_path, notice: 'Order cancelled successfully'
+  end
   private
 
   def order_address_params

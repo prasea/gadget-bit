@@ -1,7 +1,7 @@
 <div class="container mt-5">
-  <h1 class="text-center mb-5">My Orders</h1>
   <div class="row">
     <% if @orders.present? %>
+      <h1 class="text-center mb-5">My Orders</h1>
       <% @orders.each do |order| %>
         <div class="col-md-4 mb-4">
           <div class="card h-100">
@@ -13,6 +13,9 @@
           </div>
         </div>
       <% end %>
+    <% else %>
+      <h1 class="text-center mb-5">No Orders Yet !</h1>
+      <%= link_to "Go back shopping", root_path, class:"btn btn-primary btn-lg" %>
     <% end %>
   </div>
 </div>
