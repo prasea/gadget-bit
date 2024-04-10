@@ -12,3 +12,6 @@ application.register("price-filter", PriceFilterController)
 
 import ProductSearchController from "./product_search_controller"
 application.register("product-search", ProductSearchController)
+
+import SignupValidationController from "./signup_validation_controller"
+application.register("signup-validation", SignupValidationController)
