@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import CategoryFormValidationController from "./category_form_validation_controller"
+application.register("category-form-validation", CategoryFormValidationController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 

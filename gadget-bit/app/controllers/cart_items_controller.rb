@@ -10,7 +10,7 @@ class CartItemsController < ApplicationController
   def add_to_cart
     find_or_create_cart_item
     requested_quantity = params[:quantity].to_i
-    #Even when prouct not in cart, the default quantity is 1
+    #Even when product not in cart, the default quantity is 1
     if @cart_item.quantity == 1       
       remaining_stock = @selected_product.stock.quantity
     else 

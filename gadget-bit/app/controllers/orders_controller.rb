@@ -7,17 +7,16 @@ class OrdersController < ApplicationController
   
     if @order.save
       @current_cart.cart_items.each do |cart_item|
-        @order.cart_items << cart_item
         @order.order_products.create(product_id: cart_item.product_id, quantity: cart_item.quantity)
       end
       @order_address.order_id = @order.id
   
       if @order_address.save
         # OrderMailer.with(user: current_user, order: @order).order_confirmation_email.deliver_now        
-        if Rails.env.production?
-          SendOrderConfirmationEmailJob.perform_later(current_user.id, @order.id)
-          SendNewOrderEmailJob.perform_later(@order.id)
-        end
+        # OrderMailer.with(order: @order).new_order_email.deliver_now
+        # Using ActiveJob For Sending Mail !
+        # SendOrderConfirmationEmailJob.perform_now(current_user.id, @order.id)
+        # SendNewOrderEmailJob.perform_now(@order.id)
 
         @current_cart.cart_items.destroy_all
         session[:cart_id] = nil
