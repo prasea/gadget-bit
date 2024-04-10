@@ -2,11 +2,14 @@ class Admin::StocksController < ApplicationController
   before_action :find_product
   
   def new
-    if @product.stock.present?
-      redirect_to admin_product_path(@product), notice: 'Stock already exists for product.'
-    else
-      @stock = Stock.new(product: @product)
-    end
+    redirect_to admin_product_path(@product), notice: 'Stock already exists for product.' if @product.stock.present? 
+    @stock = Stock.new(product: @product)
+      
+    # if @product.stock.present?
+    #   redirect_to admin_product_path(@product), notice: 'Stock already exists for product.'
+    # else
+    #   @stock = Stock.new(product: @product)
+    # end
   end
   
   def create
@@ -26,7 +29,6 @@ class Admin::StocksController < ApplicationController
 
   def update
     @stock = @product.stock
-
     if @stock.update(stock_params)
       redirect_to edit_admin_product_path(@product), notice: 'Stock updated successfully.'
     else

@@ -15,7 +15,6 @@ class Admin::OrdersController < AdminController
       product = order_product.product
       if order_product.quantity > product.stock.quantity
         redirect_to admin_order_path(@order), alert: "Failed to mark order as fulfilled. Insufficient stock"
-        return
       end
     end
     update_order_product_stock(true)
@@ -25,7 +24,6 @@ class Admin::OrdersController < AdminController
     @order = Order.find(params[:id])
     if @order.order_products.empty?
       redirect_to admin_order_path(@order), alert: "Failed to mark order as unfulfilled. No cart items found."
-      return
     end
     update_order_product_stock(false)
   end
