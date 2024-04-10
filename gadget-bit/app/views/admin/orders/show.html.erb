@@ -25,13 +25,13 @@
         </tr>
       </thead>
       <tbody>
-        <% @order.cart_items.each do |cart_item| %>
+        <% @order.order_products.each do |order_product| %>
           <tr>
-            <td><%= cart_item.product.name %></td>
-            <td><%= cart_item.quantity %></td>
-            <td><%= cart_item.product.price %></td>
-            <td><%= cart_item.total_of_single_item %></td>
-            <td><%= cart_item.product.stock.quantity %></td>
+            <td><%= order_product.product.name %></td>
+            <td><%= order_product.quantity %></td>
+            <td><%= order_product.product.price %></td>
+            <td><%= order_product.total_of_single_item %></td>
+            <td><%= order_product.product.stock.quantity %></td>
           </tr>
         <% end %>
       </tbody>

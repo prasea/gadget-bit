@@ -11,9 +11,9 @@ class Admin::OrdersController < AdminController
 
   def mark_fulfilled
     @order = Order.find(params[:id])
-    @order.cart_items.each do |cart_item|
-      product = cart_item.product
-      if cart_item.quantity > product.stock.quantity
+    @order.order_products.each do |order_product|
+      product = order_product.product
+      if order_product.quantity > product.stock.quantity
         redirect_to admin_order_path(@order), alert: "Failed to mark order as fulfilled. Insufficient stock"
         return
       end
@@ -23,7 +23,7 @@ class Admin::OrdersController < AdminController
 
   def mark_unfulfilled
     @order = Order.find(params[:id])
-    if @order.cart_items.empty?
+    if @order.order_products.empty?
       redirect_to admin_order_path(@order), alert: "Failed to mark order as unfulfilled. No cart items found."
       return
     end
@@ -34,7 +34,7 @@ class Admin::OrdersController < AdminController
 
   def update_order_product_stock(order_status)
     Order.transaction do
-      @order.cart_items.each do |cart_item|
+      @order.order_products.each do |cart_item|
         product = cart_item.product
         new_quantity = order_status ? product.stock.quantity - cart_item.quantity : product.stock.quantity + cart_item.quantity
         product.stock.update(quantity: new_quantity)
