@@ -1,7 +1,7 @@
  <%= form_with(model: [:admin, product],data: { controller: "product-form-validation" }) do |form| %>
   <% if product.errors.any? %>
     <div class="alert alert-danger rounded-1 mt-3">
-      <h2><%= pluralize(product.errors.count, "error") %> prohibited this category from being saved:</h2>
+      <h2><%= pluralize(product.errors.count, "error") %> prohibited this product from being saved:</h2>
       <ul>
         <% product.errors.each do |error| %>
           <li><%= error.full_message %></li>
