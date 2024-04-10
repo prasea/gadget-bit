@@ -3,24 +3,15 @@ class Admin::StocksController < ApplicationController
   
   def new
     redirect_to admin_product_path(@product), notice: 'Stock already exists for product.' if @product.stock.present? 
-    @stock = Stock.new(product: @product)
-      
-    # if @product.stock.present?
-    #   redirect_to admin_product_path(@product), notice: 'Stock already exists for product.'
-    # else
-    #   @stock = Stock.new(product: @product)
-    # end
+    @stock = Stock.new(product: @product) unless @product.stock.present? 
   end
   
   def create
     @stock = Stock.new(stock_params)
     @stock.product = @product
 
-    if @stock.save
-      redirect_to edit_admin_product_path(@product), notice: 'Stock added successfully.'
-    else
-      render :new
-    end
+    redirect_to edit_admin_product_path(@product), notice: 'Stock added successfully.' if @stock.save      
+    render :new unless @stock.save      
   end
 
   def edit
@@ -29,12 +20,10 @@ class Admin::StocksController < ApplicationController
 
   def update
     @stock = @product.stock
-    if @stock.update(stock_params)
-      redirect_to edit_admin_product_path(@product), notice: 'Stock updated successfully.'
-    else
-      render :edit
-    end
+    redirect_to edit_admin_product_path(@product), notice: 'Stock updated successfully.' if @stock.update(stock_params)
+    render :edit unless @stock.update(stock_params)
   end
+  
 
   private
 

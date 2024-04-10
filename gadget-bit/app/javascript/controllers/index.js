@@ -13,11 +13,14 @@ application.register("hello", HelloController)
 import PriceFilterController from "./price_filter_controller"
 application.register("price-filter", PriceFilterController)
 
-// import ProductFormValidationController from "./product_form_validation_controller"
-// application.register("product-form-validation", ProductFormValidationController)
+import ProductFormValidationController from "./product_form_validation_controller"
+application.register("product-form-validation", ProductFormValidationController)
 
 import ProductSearchController from "./product_search_controller"
 application.register("product-search", ProductSearchController)
 
 import SignupValidationController from "./signup_validation_controller"
 application.register("signup-validation", SignupValidationController)
+
+import StockFormValidationController from "./stock_form_validation_controller"
+application.register("stock-form-validation", StockFormValidationController)
