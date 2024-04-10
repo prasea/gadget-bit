@@ -23,8 +23,9 @@ export default class extends Controller {
       descriptionInput.classList.remove("is-invalid");
     }
 
-    if (priceInput.value.trim() === "") {
-      errorMessages.push("Price can't be blank");
+    const priceValue = parseFloat(priceInput.value.trim());
+    if (isNaN(priceValue) || priceValue <= 0 || priceValue <= 20000) {
+      errorMessages.push("Price must be a valid positive number greater than 20000");
       priceInput.classList.add("is-invalid");
     } else {
       priceInput.classList.remove("is-invalid");
