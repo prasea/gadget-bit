@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import CartQuantityValidationController from "./cart_quantity_validation_controller"
+application.register("cart-quantity-validation", CartQuantityValidationController)
+
 import CategoryFormValidationController from "./category_form_validation_controller"
 application.register("category-form-validation", CategoryFormValidationController)
 

@@ -7,18 +7,15 @@ class CartItemsController < ApplicationController
     redirect_to carts_path(@current_cart)
   end
 
+  
   def add_to_cart
     find_or_create_cart_item
     requested_quantity = params[:quantity].to_i
     #Even when product not in cart, the default quantity is 1
-    if @cart_item.quantity == 1       
-      remaining_stock = @selected_product.stock.quantity
-    else 
-      remaining_stock = @selected_product.stock.quantity - @cart_item.quantity
-    end 
+    remaining_stock = @selected_product.stock.quantity - (@cart_item.quantity - 1)
   
     if remaining_stock >= requested_quantity
-      @cart_item.quantity += requested_quantity
+      @cart_item.quantity = requested_quantity
       @cart_item.save 
       redirect_to product_path(@selected_product), notice: 'Product added to cart successfully.'
     else 
@@ -45,20 +42,25 @@ class CartItemsController < ApplicationController
 
   def add_quantity
     @cart_item = find_cart_item(params[:product_id])
-    if @cart_item.product.stock.quantity > @cart_item.quantity
-      @cart_item.quantity += 1
-      @cart_item.save
-      # redirect_to carts_path(@current_cart), notice: 'Quantity incremented successfully.'      
-      respond_to do |format| 
-        format.turbo_stream { render turbo_stream: render_streams('Quantity incremented successfully.')}
+    if @cart_item.quantity < 4
+      if @cart_item.product.stock.quantity > @cart_item.quantity
+        @cart_item.quantity += 1
+        @cart_item.save
+        respond_to do |format| 
+          format.turbo_stream { render turbo_stream: render_streams('Quantity incremented successfully.')}
+        end
+      else
+        respond_to do |format| 
+          format.turbo_stream { render turbo_stream: turbo_stream.replace("flash_messages", partial: "carts/flash_messages", locals: { alert: 'Cannot increment quantity further. Product stock limit reached.', alert_type: 'danger' }) }
+        end
       end
     else
-      # redirect_to carts_path(@current_cart), alert: 'Cannot increment quantity further. Product stock limit reached.'
       respond_to do |format| 
-        format.turbo_stream { render turbo_stream: turbo_stream.replace("flash_messages", partial: "carts/flash_messages", locals: { alert: 'Cannot increment quantity further. Product stock limit reached.', alert_type: 'danger' }) }
+        format.turbo_stream { render turbo_stream: turbo_stream.replace("flash_messages", partial: "carts/flash_messages", locals: { alert: 'Cannot order more than 4 quantities.', alert_type: 'danger' }) }
       end
     end
-  end 
+  end
+  
 
   def sub_quantity 
     @cart_item = find_cart_item(params[:product_id])
@@ -81,6 +83,7 @@ class CartItemsController < ApplicationController
   def find_or_create_cart_item 
     @selected_product = Product.find(params[:product_id])
     if @current_cart.products.include?(@selected_product)
+      # flash[:alert] = "Item already present in cart"
       @cart_item = @current_cart.cart_items.find_by(product_id: @selected_product)
     else 
       @cart_item = CartItem.new 
