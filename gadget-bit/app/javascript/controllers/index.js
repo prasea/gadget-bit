@@ -4,11 +4,29 @@
 
 import { application } from "./application"
 
+import CartQuantityValidationController from "./cart_quantity_validation_controller"
+application.register("cart-quantity-validation", CartQuantityValidationController)
+
+import CategoryFormValidationController from "./category_form_validation_controller"
+application.register("category-form-validation", CategoryFormValidationController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
+
+import OrderAddressValidationController from "./order_address_validation_controller"
+application.register("order-address-validation", OrderAddressValidationController)
 
 import PriceFilterController from "./price_filter_controller"
 application.register("price-filter", PriceFilterController)
 
+import ProductFormValidationController from "./product_form_validation_controller"
+application.register("product-form-validation", ProductFormValidationController)
+
 import ProductSearchController from "./product_search_controller"
 application.register("product-search", ProductSearchController)
+
+import SignupValidationController from "./signup_validation_controller"
+application.register("signup-validation", SignupValidationController)
+
+import StockFormValidationController from "./stock_form_validation_controller"
+application.register("stock-form-validation", StockFormValidationController)

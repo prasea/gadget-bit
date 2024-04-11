@@ -10,7 +10,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @order.cart_items.each do |cart_item| %>
+    <% @order.order_products.each do |cart_item| %>
       <tr>
         <td><%= cart_item.product.name %></td>
         <td><%= cart_item.quantity %></td>
