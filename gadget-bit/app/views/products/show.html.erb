@@ -48,6 +48,16 @@
               <%= form.number_field :quantity, class: "form-control me-2", value: 1, placeholder: "Quantity", "data-cart-quantity-validation-target": "quantity" %>
               <%= form.submit "Add to cart", class: "btn btn-outline-dark", "data-action": "cart-quantity-validation#validate" %>
             </div>
+            <% if @cart_item && @cart_item.errors.any? %>
+              <div class="alert alert-danger mt-3">
+                <h4><%= pluralize(@cart_item.errors.count, "error") %> prohibited this product from being added to the cart:</h4>
+                <ul>
+                  <% @cart_item.errors.full_messages.each do |message| %>
+                    <li><%= message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
           <% end %>
         </div>
       </div>

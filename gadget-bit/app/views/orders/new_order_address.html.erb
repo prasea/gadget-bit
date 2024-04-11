@@ -28,13 +28,31 @@
     <div class="col-md-8 order-md-1">
       <h4 class="mb-3">Billing address</h4>
       <%= form_with(model: @order_address, url: new_order_path, method: :post) do |form| %>
+        <% if @order_address.errors.any? %>
+          <div class="alert alert-danger">
+            <h4><%= pluralize(@order_address.errors.count, "error") %> prohibited this order address from being saved:</h4>
+            <ul>
+              <% @order_address.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
         <div class="mb-3">
-          <%= form.text_field :city, class: 'form-control' %>
           <%= form.label :city, class: 'form-label' %>
+          <%= form.text_field :city, class: 'form-control' %>
+        </div>
+        <div class="mb-3">
+          <%= form.label :area, class: 'form-label' %>
+          <%= form.text_field :area, class: 'form-control' %>
         </div>
         <div class="mb-3">
           <%= form.label :state, class: 'form-label' %>
-          <%= form.select :state, OrderAddress::NEPAL_STATES, class: 'form-control w-100'  %>
+          <%= form.select :state, OrderAddress.states.keys, {prompt: 'Select State'}, class: 'form-control w-100' %>
+        </div>
+        <div class="mb-3">
+          <%= form.label :landmark, class: 'form-label' %>
+          <%= form.text_field :landmark, class: 'form-control' %>
         </div>
         <div class="mb-3">
           <%= form.submit "Checkout", class: 'btn btn-primary btn-lg btn-block' %>

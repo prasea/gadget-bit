@@ -2,7 +2,6 @@ class OrdersController < ApplicationController
 
   def order
     @order = Order.new(user: current_user, total: @current_cart.total_price, fulfilled: false)
-     
     @order_address = OrderAddress.new(order_address_params)
   
     if @order.save
@@ -17,18 +16,18 @@ class OrdersController < ApplicationController
         # Using ActiveJob For Sending Mail !
         # SendOrderConfirmationEmailJob.perform_now(current_user.id, @order.id)
         # SendNewOrderEmailJob.perform_now(@order.id)
-
         @current_cart.cart_items.destroy_all
         session[:cart_id] = nil
         redirect_to success_path, notice: 'Your order has been placed successfully.'
       else
-        @order.destroy  
-        redirect_to root_path, alert: 'Failed to place your order address. Please try again.'
+        flash.now[:alert] = @order_address.errors.full_messages.join(', ')
+        render :new_order_address, status: :unprocessable_entity
       end
     else
       redirect_to root_path, alert: 'Failed to place your order. Please try again.'
     end
   end
+  
     
   def new_order_address
     @order_address = OrderAddress.new
@@ -53,6 +52,6 @@ class OrdersController < ApplicationController
   private
 
   def order_address_params
-    params.require(:order_address).permit(:city, :state)
+    params.require(:order_address).permit(:city, :state, :area, :landmark)
   end  
 end

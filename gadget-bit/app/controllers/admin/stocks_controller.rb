@@ -1,4 +1,4 @@
-class Admin::StocksController < ApplicationController
+class Admin::StocksController < AdminController
   before_action :find_product
   
   def new
