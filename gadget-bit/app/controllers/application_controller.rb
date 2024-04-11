@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   before_action :set_current_cart
   helper_method :admin_user?, :categories_for_nav
   include Pagy::Backend
+  
   def set_current_cart
     if current_user && current_user.cart.nil? 
       cart = Cart.create 
