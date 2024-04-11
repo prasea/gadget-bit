@@ -13,6 +13,9 @@ application.register("category-form-validation", CategoryFormValidationControlle
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
 
+import OrderAddressValidationController from "./order_address_validation_controller"
+application.register("order-address-validation", OrderAddressValidationController)
+
 import PriceFilterController from "./price_filter_controller"
 application.register("price-filter", PriceFilterController)
 
