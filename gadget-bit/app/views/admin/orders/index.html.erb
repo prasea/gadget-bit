@@ -2,7 +2,7 @@
 <table class="table">
   <thead class="table-dark">
     <tr>
-      <th>Order ID</th>
+      <th>Index</th>
       <th>Ordered By</th>
       <th>Ordered Date</th>
       <th>Ordered Amount</th>
@@ -10,9 +10,9 @@
     </tr>
   </thead>
   <tbody>
-    <% @not_fulfilled_orders.each do |order| %>
+    <% @not_fulfilled_orders.each.with_index(1) do |order, index| %>
       <tr>
-        <td><%= order.id %></td>
+        <td><%= index %></td>
         <td><%= order.user.email %></td>
         <td><%= order.created_at.to_date %></td>
         <td><%= order.total %></td>
@@ -26,7 +26,7 @@
 <table class="table">
   <thead class="table-dark">
     <tr>
-      <th>Order ID</th>
+      <th>Index</th>
       <th>Ordered By</th>
       <th>Ordered Date</th>
       <th>Ordered Amount</th>
@@ -34,9 +34,9 @@
     </tr>
   </thead>
   <tbody>
-    <% @fulfilled_orders.each do |order| %>
+    <% @fulfilled_orders.each.with_index(1) do |order, index| %>
       <tr>
-        <td><%= order.id %></td>
+        <td><%= index %></td>
         <td><%= order.user.email %></td>
         <td><%= order.created_at.to_date %></td>
         <td><%= order.total %></td>

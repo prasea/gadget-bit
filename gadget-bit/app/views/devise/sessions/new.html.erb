@@ -1,5 +1,5 @@
-<div class="container mx-auto">
-  <h2>Log in</h2>
+<div class="wrapper mx-auto">
+  <h2 class="text-center">Log in</h2>
   <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "needs-validation", novalidate: true }) do |f| %>
     <div class="mb-3">
       <%= f.label :email, class: "form-label" %>
@@ -19,6 +19,6 @@
       <%= f.submit "Log in", class: "btn btn-primary btn-lg" %>
     </div>
   <% end %>
-  <p class="lead">Not a member, Sign up instead !</p>
+  <p class="lead">Not a member, Sign up instead!</p>
   <%= render "devise/shared/links" %>
 </div>

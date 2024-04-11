@@ -18,10 +18,10 @@
       <thead class="table-dark">
         <tr>
           <th>Item</th>
-          <th>OrderedQuantity</th>
+          <th>Ordered Quantity</th>
           <th>Price</th>
           <th>Total</th>
-          <th>InStock</th>
+          <th>In Stock</th>
         </tr>
       </thead>
       <tbody>
@@ -33,14 +33,16 @@
             <td><%= order_product.total_of_single_item %></td>
             <td><%= order_product.product.stock.quantity %></td>
           </tr>
+          <!-- Additional row for Grand Total -->
+          <% if @order.order_products.last == order_product %>
+            <tr class="table-secondary">
+              <td colspan="3" class="text-end">Grand Total:</td>
+              <td><%= @order.total %></td>
+              <td></td>
+            </tr>
+          <% end %>
         <% end %>
       </tbody>
-      <tfoot>
-        <tr class="table-secondary">
-          <td class="text-end">Grand Total:</td>
-          <td><%= @order.total %></td>
-        </tr>
-      </tfoot>
     </table>
     <% if current_user && !@order.fulfilled %>
       <%= link_to 'Mark as Fulfilled', mark_fulfilled_admin_order_path(@order), data: {turbo_method: :patch}, class: 'btn btn-success mb-3' %>
@@ -55,6 +57,9 @@
       <div class="card-body">
         <p class="card-text">
           <strong>Email:</strong> <%= @order.user.email %>
+        </p>
+        <p class="card-text">
+          <strong>Contact:</strong> <%= @order.user.contact %>
         </p>
         <p class="card-text">
           <strong>Address:</strong> <%= @order.order_address.city %>
