@@ -31,22 +31,34 @@ export default class extends Controller {
       priceInput.classList.remove("is-invalid");
     }
     
-    if (imagesInput && imagesInput.files.length > 0) {
-      const validImageTypes = ['image/jpeg', 'image/png'];
-      for (let i = 0; i < imagesInput.files.length; i++) {
-        const file = imagesInput.files[i];
-        if (!validImageTypes.includes(file.type)) {
-          errorMessages.push("Please upload only JPEG or PNG images.");
-          imagesInput.classList.add("is-invalid");
-          break;
+    const existingImage = document.querySelector('.img-fluid');   
+    if ((imagesInput && imagesInput.files.length > 0) || existingImage) {
+        const validImageTypes = ['image/jpeg', 'image/png'];
+        let hasValidImage = false; 
+    
+        if (imagesInput && imagesInput.files.length > 0) {
+          for (let i = 0; i < imagesInput.files.length; i++) {
+            const file = imagesInput.files[i];
+            if (validImageTypes.includes(file.type)) {
+                hasValidImage = true;
+            } else {
+                errorMessages.push("Please upload only JPEG or PNG images.");
+                imagesInput.classList.add("is-invalid");
+                return; 
+            }
+          }
         } else {
-          imagesInput.classList.remove("is-invalid");
+          // If there's an existing image, consider it as a valid image
+            hasValidImage = true; 
         }
-      }
+        if (hasValidImage) {
+            imagesInput.classList.remove("is-invalid");
+        }
     } else {
-      errorMessages.push("Please upload at least one image.");
-      imagesInput.classList.add("is-invalid");
+        errorMessages.push("Please upload at least one image.");
+        imagesInput.classList.add("is-invalid");
     }
+    
 
     if (errorMessages.length > 0) {
       this.displayAlert(errorMessages);
