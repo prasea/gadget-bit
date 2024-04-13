@@ -34,12 +34,8 @@ class Admin::OrdersController < AdminController
     Order.transaction do
       @order.order_products.each do |cart_item|
         product = cart_item.product
-        new_quantity = order_status ? product.stock.quantity - cart_item.quantity : product.stock.quantity + cart_item.quantity
-        if(new_quantity == 0 )
-          product.stock.update(quantity: 1)
-        else
-          product.stock.update(quantity: new_quantity)
-        end
+        new_quantity = order_status ? product.stock.quantity - cart_item.quantity : product.stock.quantity + cart_item.quantity        
+        product.stock.update(quantity: new_quantity)
       end
       if @order.update(fulfilled: order_status)
         redirect_to admin_order_path(@order), notice: "Order marked as #{order_status ? 'fulfilled' : 'unfulfilled'} successfully."
