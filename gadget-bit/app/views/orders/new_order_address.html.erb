@@ -48,7 +48,7 @@
         </div>
         <div class="mb-3">
           <%= form.label :state, class: 'form-label' %>
-          <%= form.select :state, OrderAddress.states.keys, {prompt: 'Select State'}, class: 'form-control', 'data-order-address-validation-target': 'state' %>
+          <%= form.select :state, OrderAddress::NEPAL_STATES, {prompt: 'Select State'}, class: 'form-control', 'data-order-address-validation-target': 'state' %>
         </div>
         <div class="mb-3">
           <%= form.label :landmark, class: 'form-label' %>

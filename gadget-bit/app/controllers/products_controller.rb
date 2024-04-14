@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   
   def index 
-    @pagy, @products = pagy(Product.includes(:category).order(created_at: :desc))
+    @pagy, @products = pagy(Product.includes(:category).joins(:stock).where("stocks.quantity > 0").order(created_at: :desc))
     @buy_now_method = current_user ? :post : :get
 
     if params[:max_price].present?
@@ -20,7 +20,7 @@ class ProductsController < ApplicationController
 
   def search
     if params[:q].present?
-      @products = Product.where("name ILIKE ?", "%" + params[:q] + "%")
+      @products = Product.includes(:category).joins(:stock).where("products.name ILIKE ?", "%" + params[:q] + "%").where("stocks.quantity > 0").order(created_at: :desc)
       if @products.empty?
         flash.now[:notice] = "No products found for '#{params[:q]}'."
       end

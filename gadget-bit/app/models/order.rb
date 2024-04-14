@@ -4,7 +4,7 @@ class Order < ApplicationRecord
   has_many :order_products, dependent: :destroy
   has_many :products, through: :order_products
 
-  has_many :cart_items, dependent: :destroy
+  # has_many :cart_items, dependent: :destroy
   has_one :order_address, dependent: :destroy
 
   def total 

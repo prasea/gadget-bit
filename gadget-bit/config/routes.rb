@@ -10,7 +10,7 @@ Rails.application.routes.draw do
       root to: 'products#index', as: :user_root
     end
   end
-  root 'products#index'
+  root 'products#index', only: %i[index show search]
 
   namespace :admin do
     resources :categories
@@ -27,23 +27,26 @@ Rails.application.routes.draw do
     get :search, on: :collection
   end
 
-  resources :categories
-
-  get 'carts/:id', to: 'carts#show', as: 'carts'
-  post 'buy_now/:product_id', to: 'cart_items#buy_now', as: 'buy_now'
-  post 'add_to_cart/:product_id', to: 'cart_items#add_to_cart', as: 'add_to_cart'
-  delete 'remove_from_cart/:product_id', to: 'cart_items#remove_from_cart', as: 'remove_from_cart'
-
-  post 'add_quantity/:product_id', to: 'cart_items#add_quantity', as: 'cart_item_add_quantity'
-  post 'sub_quantity/:product_id', to: 'cart_items#sub_quantity', as: 'cart_item_sub_quantity'
-
-  post 'orders', to: 'orders#order', as: 'new_order'
-  get 'success', to: 'orders#success', as: 'success'
-  get 'orders', to: 'orders#index', as: 'orders'
-  get 'orders/:order_id', to: 'orders#show', as: 'order_show'
-  delete 'orders/:order_id', to: 'orders#destroy', as: 'order_destroy'
-
-  get 'order_address', to: 'orders#new_order_address', as: 'new_order_address'
+  resources :categories, only: %i[show]
+  
+  authenticated :user do    
+    get 'carts/:id', to: 'carts#show', as: 'carts'
+    post 'buy_now/:product_id', to: 'cart_items#buy_now', as: 'buy_now'
+    post 'add_to_cart/:product_id', to: 'cart_items#add_to_cart', as: 'add_to_cart'
+    delete 'remove_from_cart/:product_id', to: 'cart_items#remove_from_cart', as: 'remove_from_cart'
+  
+    post 'add_quantity/:product_id', to: 'cart_items#add_quantity', as: 'cart_item_add_quantity'
+    post 'sub_quantity/:product_id', to: 'cart_items#sub_quantity', as: 'cart_item_sub_quantity'
+    
+    post 'orders', to: 'orders#order', as: 'new_order'
+    get 'success', to: 'orders#success', as: 'success'
+    get 'orders', to: 'orders#index', as: 'orders'
+    get 'orders/:order_id', to: 'orders#show', as: 'order_show'
+    delete 'orders/:order_id', to: 'orders#destroy', as: 'order_destroy'
+  
+    get 'order_address', to: 'orders#new_order_address', as: 'new_order_address'
+  end
+  
 
   # get 'search', to: 'products#search', as: 'search'
 
