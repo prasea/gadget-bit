@@ -1,20 +1,5 @@
 <div class="container">
   <h1 class="font-bold text-4xl">Update stock</h1>
-  <%= form_with(model: [:admin, @product, @stock], local: true) do |form| %>
-    <% if @stock.errors.any? %>
-      <div id="error_explanation" class="alert alert-danger mt-3">
-        <h2><%= pluralize(@stock.errors.count, "error") %> prohibited this stock from being saved:</h2>
-        <ul>
-          <% @stock.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-    <div class="mb-3">
-      <%= form.label :quantity %>
-      <%= form.number_field :quantity, class: "form-control" %>
-    </div>
-    <%= form.submit "Update Stock", class: "btn btn-primary" %>
-  <% end %>
+  <%= render 'form' %>
+  <%= link_to "Back to Edit product", edit_admin_product_path(@product), class: "btn btn-secondary mt-3" %>
 </div>

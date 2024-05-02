@@ -1,0 +1,17 @@
+<%= form_with(model: [:admin, @product, @stock], local: true, data: {controller: 'stock-form-validation'}) do |form| %>
+  <% if @stock.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger mt-3">
+      <h2><%= pluralize(@stock.errors.count, "error") %> prohibited this stock from being saved:</h2>
+      <ul>
+        <% @stock.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <%= form.label :quantity %>
+    <%= form.number_field :quantity, class: "form-control" %>
+  </div>
+  <%= form.submit class: "btn btn-primary", "data-action": "stock-form-validation#validate" %>
+<% end %>

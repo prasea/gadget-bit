@@ -1,0 +1,7 @@
+<%= @greeting %> <%= @user.email %>,
+Your order has been successfully placed. Here are the details:
+Product             Quantity   Price
+<% @order.order_products.each do |cart_item| %>
+  <%= cart_item.product.name %>  <%= cart_item.quantity %>        Rs. <%= cart_item.product.price %>
+<% end %>
+Total: Rs.<%= @order.total %>

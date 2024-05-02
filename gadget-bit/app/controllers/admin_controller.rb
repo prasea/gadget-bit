@@ -7,7 +7,7 @@ class AdminController < ApplicationController
       sales: Order.where(created_at: Time.now.midnight..Time.now).count, 
       revenue: Order.where(created_at: Time.now.midnight..Time.now).sum(:total).try(:round), 
       avg_sale: Order.where(created_at: Time.now.midnight..Time.now).average(:total).try(:round), 
-      total_products_sold: Order.joins(:cart_items).where(created_at: Time.now.midnight..Time.now).sum('cart_items.quantity')
+      total_products_sold: Order.joins(:order_products).where(created_at: Time.now.midnight..Time.now).sum('order_products.quantity')
     } 
   end
 
