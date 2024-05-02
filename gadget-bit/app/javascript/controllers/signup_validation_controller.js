@@ -3,36 +3,53 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
   
   validate(event) {
-    const email = document.getElementById('user_email').value.trim();
-    const name = document.getElementById('user_name').value.trim();
-    const contact = document.getElementById('user_contact').value.trim();
-    const password = document.getElementById('user_password').value.trim();
-    const passwordConfirmation = document.getElementById('user_password_confirmation').value.trim();
+    const emailField = document.getElementById('user_email');
+    const nameField = document.getElementById('user_name');
+    const contactField = document.getElementById('user_contact');
+    const passwordField = document.getElementById('user_password');
+    const passwordConfirmationField = document.getElementById('user_password_confirmation');
     
     const errorMessages = [];
 
-    if (email === '') {
+    if (emailField.value.trim() === '') {
       errorMessages.push("Email can't be blank");
+      this.addErrorClass(emailField);
+    } else {
+      this.removeErrorClass(emailField);
     }
 
-    if (name === '') {
+    if (nameField.value.trim() === '') {
       errorMessages.push("Name can't be blank");
+      this.addErrorClass(nameField);
+    } else {
+      this.removeErrorClass(nameField);
     }
 
-    if (contact === '') {
+    if (contactField.value.trim() === '') {
       errorMessages.push("Contact can't be blank");
+      this.addErrorClass(contactField);
+    } else {
+      this.removeErrorClass(contactField);
     }
 
-    if (password === '') {
+    if (passwordField.value.trim() === '') {
       errorMessages.push("Password can't be blank");
-    } else if (password.length < 6) {
+      this.addErrorClass(passwordField);
+    } else if (passwordField.value.trim().length < 6) {
       errorMessages.push("Password must be at least 6 characters long");
+      this.addErrorClass(passwordField);
+    } else {
+      this.removeErrorClass(passwordField);
     }
 
-    if (passwordConfirmation === '') {
+    if (passwordConfirmationField.value.trim() === '') {
       errorMessages.push("Password Confirmation can't be blank");
-    } else if (passwordConfirmation.length < 6) {
+      this.addErrorClass(passwordConfirmationField);
+    } else if (passwordConfirmationField.value.trim().length < 6) {
       errorMessages.push("Confirmation password must be at least 6 characters long");
+      this.addErrorClass(passwordConfirmationField);
+    } else {
+      this.removeErrorClass(passwordConfirmationField);
     }
 
     if (errorMessages.length > 0) {
@@ -60,5 +77,13 @@ export default class extends Controller {
     setTimeout(() => {
       alertDiv.remove();
     }, 5000);
+  }
+
+  addErrorClass(element) {
+    element.classList.add('is-invalid');
+  }
+
+  removeErrorClass(element) {
+    element.classList.remove('is-invalid');
   }
 }
